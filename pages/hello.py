@@ -11,9 +11,7 @@ blob_name = "MOUD Tracker Form.pdf"  # name of the blob (file) in Azure Storage
 
 # Function to download file from Azure Storage
 def download_from_azure_storage():
-    blob_service_client = BlobServiceClient.from_connection_string(
-        f"DefaultEndpointsProtocol=https;AccountName={azure_storage_account_name};AccountKey={azure_storage_account_key}"
-    )
+    blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName={azure_storage_account_name};AccountKey={azure_storage_account_key}")
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
     download_stream = blob_client.download_blob().readall()
     return download_stream
