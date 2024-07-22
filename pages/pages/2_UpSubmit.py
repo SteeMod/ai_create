@@ -46,7 +46,7 @@ def main():
         blob_service_client = BlobServiceClient.from_connection_string(os.getenv('AZURE_STORAGE_CONNECTION_STRING', "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"))
         container_client = blob_service_client.get_container_client(os.getenv('BLOB_CONTAINER_NAME', "data1"))
         blob_client = container_client.get_blob_client(uploaded_file.name)
-
+ddf
         # Upload the PDF file to Azure Blob Storage
         blob_client.upload_blob(uploaded_file.getvalue(), overwrite=True)
 
