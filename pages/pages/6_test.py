@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient
 import os
 from io import StringIO
 
-# Azure Blob Storage settings
-connect_str = os.getenv('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+ #Retrieve the connection string from an environment variable
+connect_str =('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')  # Use the correct environment variable name
 container_name = 'data1'
 
 # Initialize the BlobServiceClient
@@ -23,6 +23,7 @@ def download_csv_data(blob_name):
         return data
     except Exception as e:
         # Handle the case where the blob does not exist or cannot be accessed
+        st.error(f"Error downloading or processing the CSV file: {e}")
         return None
 
 # Streamlit UI
