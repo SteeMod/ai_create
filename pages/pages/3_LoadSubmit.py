@@ -7,24 +7,16 @@ import os
 from csv import DictWriter
 import asyncio
 
-# Define an async wrapper for Streamlit
-def st_async(func):
-    import asyncio
-    def wrapper(*args, **kwargs):
-        return asyncio.run(func(*args, **kwargs))
-    return wrapper
-
-@st.experimental_singleton
 async def process_file(file_path, filename):
-    endpoint = os.getenv('https://new1one.cognitiveservices.azure.com/')
-    credential = AzureKeyCredential(os.getenv('a1fb5ca25a77422590c3f85c8961de47'))
+    endpoint = os.getenv('FORM_RECOGNIZER_ENDPOINT', "https://new2two.cognitiveservices.azure.com/")
+    credential = AzureKeyCredential(os.getenv('FORM_RECOGNIZER_API_KEY', "027ad9245a594c5886cf5d90abecb9d1"))
     client = DocumentAnalysisClient(endpoint, credential)
 
-    model_id = os.getenv('Thessa5v6')
+    model_id = os.getenv('FORM_RECOGNIZER_CUSTOM_MODEL_ID', "Thessa5vs6")
 
     # Create BlobServiceClient
-    blob_service_client = BlobServiceClient.from_connection_string(os.getenv('AZURE_STORAGE_CONNECTION_STRING'))
-    container_client = blob_service_client.get_container_client(os.getenv('BLOB_CONTAINER_NAME'))
+    blob_service_client = BlobServiceClient.from_connection_string(os.getenv('AZURE_STORAGE_CONNECTION_STRING', "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"))
+    container_client = blob_service_client.get_container_client(os.getenv('BLOB_CONTAINER_NAME', "data1"))
     blob_client = container_client.get_blob_client(filename)
 
     # Upload the PDF file to Azure Blob Storage
@@ -69,7 +61,7 @@ def main():
         with open(file_path, 'wb') as f:
             f.write(uploaded_file.getbuffer())
         if os.path.exists(file_path):
-            st_async(process_file)(file_path, uploaded_file.name)
+            asyncio.run(process_file(file_path, uploaded_file.name))
             st.write('File has been processed and saved to Blob Storage.')
         else:
             st.write('Error: File was not saved correctly.')
