@@ -1,6 +1,7 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
-from streamlit_pdf_viewer import pdf_viewer
+import fitz  # PyMuPDF
+import io
 
 # Azure Storage Account details
 azure_storage_account_name = "devcareall"
@@ -23,9 +24,16 @@ st.title("Download Form")
 # Download the file from Azure Storage
 pdf_file = download_from_azure_storage()
 
-# Display the PDF in a PDF viewer
-binary_data = pdf_file
-pdf_viewer(input=binary_data, width=700)
+# Display the PDF in a PDF viewer using PyMuPDF
+if pdf_file:
+    doc = fitz.open(stream=pdf_file, filetype="pdf")
+    # Assuming you want to display the first page for simplicity
+    page = doc.load_page(0)  # Load the first page
+    pix = page.get_pixmap()
+    img_bytes = io.BytesIO()
+    pix.save(img_bytes, format="PNG")
+    img_bytes.seek(0)
+    st.image(img_bytes, caption="Page 1 of PDF")
 
 # Provide a download button in Streamlit
 st.download_button(
