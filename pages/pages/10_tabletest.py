@@ -20,7 +20,7 @@ def main():
             with cols[0]:
                 st.text_input("Mark X", key=f"fn{row}")  # Unique key for each input
             with cols[1]:
-                st.text_input("MedicationName", key=f"ln{row}")
+                st.text_input("MedicationName", key=f"medname{row}")
             with cols[2]:
                 st.text_input("Dosage", key=f"addr{row}")
             with cols[3]:
