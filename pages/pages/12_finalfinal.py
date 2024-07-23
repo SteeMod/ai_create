@@ -66,16 +66,36 @@ def generate_form(df, row_index=0):
         Med3Route = Med3Route.text_input("Route", value=str(row_data.get('Med3Route', '')))
         Med3Instructions = Med3Instructions.text_input("Instructions", value=str(row_data.get('Med3Instructions', '')))
 
+        Med4Check, Med4Name, Med4Dosage, Med4Frequency, Med4Form, Med4Route, Med4Instructions = st.columns(7)
+        Med4Check = Med4Check.text_input("Select [x]", value=str(row_data.get('Med4Check', '')))
+        Med4Name = Med4Name.text_input("Medication", value=str(row_data.get('Med4Name', '')))
+        Med4Dosage = Med4Dosage.text_input("Dosage", value=str(row_data.get('Med4Dosage', '')))
+        Med4Frequency = Med4Frequency.text_input("Frequency", value=str(row_data.get('Med4Frequency', '')))
+        Med4Form = Med4Form.text_input("Form", value=str(row_data.get('Med4Form', '')))
+        Med4Route = Med4Route.text_input("Route", value=str(row_data.get('Med4Route', '')))
+        Med4Instructions = Med4Instructions.text_input("Instructions", value=str(row_data.get('Med4Instructions', '')))
+
         # Medication details section
         OTPName, OTPClinician, OTPphone= st.columns(3)
-        OTPName = OTPName.text_input("OTPName", value=str(row_data['OTPName']))
-        OTPClinician=OTPClinician.text_input("OTPClinician", value=str(row_data['OTPClinician']))
-        OTPphone = OTPphone.text_input("OTPphone", value=str(row_data['OTPphone']))
-        OTPAddress= st.text_input("OTPAdress", value=str(row_data['OTPAddress']))
+        OTPName = OTPName.text_input("OTPName", value=str(row_data.get('OTPName', '')))
+        OTPClinician=OTPClinician.text_input("OTPClinician", value=str(row_data.get('OTPClinician', '')))
+        OTPphone = OTPphone.text_input("OTPphone", value=str(row_data.get('OTPphone', '')))
+        OTPAddress= st.text_input("OTPAddress", value=str(row_data.get('OTPAddress', '')))
 
         PharmacyName, PharmacyPhone = st.columns(2)
-        PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data['PharmacyName']))
-        PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data['PharmacyPhone']))
+        PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
+        PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
+        
+        # Treatment Plan table
+        Day1, Day1Yes, Day1No, Day1Dosage, Day1Freq, Day1Form, Day1Route = st.columns(7)
+        Day1 = Day1.text_input("Day", value=str(row_data.get('Day1', '')))
+        Day1Yes = Day1Yes.text_input("Yes", value=str(row_data.get('Day1Yes', '')))
+        Day1No = Day1No.text_input("No", value=str(row_data.get('Day1No', '')))
+        Day1Dosage = Day1Dosage.text_input("Dosage", value=str(row_data.get('Day1Dosage', '')))
+        Day1Freq = Day1Freq.text_input("Frequency", value=str(row_data.get('Day1Freq', '')))
+        Day1Form = Day1Form.text_input("Form", value=str(row_data.get('Day1Form', '')))
+        Day1Route = Day1Route.text_input("Route", value=str(row_data.get('Day1Route', '')))
+
 
 # Main function to control the app
 def main():
