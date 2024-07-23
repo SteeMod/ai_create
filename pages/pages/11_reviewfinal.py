@@ -18,14 +18,16 @@ def main():
     CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
     CONTAINER_NAME = "data1"
     BLOB_NAME = "out1.csv"
-
+    
     # Download and parse CSV data
-    try:
-        df = download_blob_data(CONTAINER_NAME, BLOB_NAME, CONNECTION_STRING)
-        data_dict = df.to_dict(orient='records')[0]  # Assuming there's only one record
-    except Exception as e:
-        st.error(f"Failed to download or parse CSV: {e}")
-        return
+def download_blob_data(container_name, blob_name, connection_string):
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+    stream = io.BytesIO()
+    blob_data = blob_client.download_blob()
+    blob_data.readinto(stream)
+    stream.seek(0)  # Reset stream position to the beginning
+    return pd.read_csv(stream)
 
     with st.form("my_form"):
         # Use columns to place fields side by side and pre-fill with CSV data
