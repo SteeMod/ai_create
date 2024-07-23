@@ -21,9 +21,9 @@ def main():
 
         # Medication details section
         MedicationName, Month, Year = st.columns(3)
-        MedicationName = MedicationName.st.text_input("MEDICATION NAME")
-        Month = Month.st.text_input("MONTH")
-        Year = Year.st.text_input("YEAR")
+        MedicationName = MedicationName.text_input("MEDICATION NAME")
+        Month = Month.text_input("MONTH")
+        Year = Year.text_input("YEAR")
         
         # Medication table
         num_rows_medication = 4
