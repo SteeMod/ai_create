@@ -7,7 +7,7 @@ def main():
         # Define the number of rows and columns for your table
         num_rows = 3  # Example: 3 rows
         num_columns = 4  # Example: 4 columns (FirstName, LastName, Address, City)
-        column_names = ["FirstName", "LastName", "Address", "City"]  # Column headers
+        column_names = ["Mark X", "Medication", "Dosage", "Frequency"]  # Column headers
 
         # Create a header row for column names
         header_cols = st.columns(num_columns)
@@ -18,13 +18,13 @@ def main():
         for row in range(num_rows):
             cols = st.columns(num_columns)  # Create columns for each row
             with cols[0]:
-                st.text_input("First Name", key=f"fn{row}")  # Unique key for each input
+                st.text_input("Mark X", key=f"fn{row}")  # Unique key for each input
             with cols[1]:
-                st.text_input("Last Name", key=f"ln{row}")
+                st.text_input("MedicationName", key=f"ln{row}")
             with cols[2]:
-                st.text_input("Address", key=f"addr{row}")
+                st.text_input("Dosage", key=f"addr{row}")
             with cols[3]:
-                st.text_input("City", key=f"city{row}")
+                st.text_input("Frequency", key=f"freq{row}")
 
         # Form submission button
         submitted = st.form_submit_button("Submit")
