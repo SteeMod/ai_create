@@ -19,58 +19,52 @@ def generate_form(df, row_index=0):
     with st.form("my_form"):
         # Use columns to place fields side by side
         col1, col2 = st.columns(2)
-        FirstName = col1.text_input("FirstName", value=str(row_data['FirstName']))
-        LastName = col2.text_input("LastName", value=str(row_data['LastName']))
-        Address = st.text_input("Address", value=str(row_data['Address']))
+        FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
+        LastName = col2.text_input("LastName", value=str(row_data.get('LastName', '')))
+        Address = st.text_input("Address", value=str(row_data.get('Address', '')))
         City, State = st.columns(2)
-        City = City.text_input("City", value=str(row_data['City']))
-        State = State.text_input("State", value=str(row_data['State']))
+        City = City.text_input("City", value=str(row_data.get('City', '')))
+        State = State.text_input("State", value=str(row_data.get('State', '')))
         ZipCode, Phone = st.columns(2)
-        ZipCode = ZipCode.text_input("ZipCode", value=str(row_data['ZipCode']))
-        Phone = Phone.text_input("Phone", value=str(row_data['Phone']))
+        ZipCode = ZipCode.text_input("ZipCode", value=str(row_data.get('ZipCode', '')))
+        Phone = Phone.text_input("Phone", value=str(row_data.get('Phone', '')))
         Allergy1, Allergy2 = st.columns(2)
-        Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data['Allergy1']))
-        Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data['Allergy2']))
+        Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
+        Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
 
         # Medication details section
         MedIntakeName, MedIntakeMonth, MedIntakeYear = st.columns(3)
-        MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data['MedIntakeName']))
-        MedIntakeMonth = MedIntakeMonth.text_input("MONTH", value=str(row_data['MedIntakeMonth']))
-        MedIntakeYear = MedIntakeYear.text_input("YEAR", value=str(row_data['MedIntakeYear']))
+        MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data.get('MedIntakeName', '')))
+        MedIntakeMonth = MedIntakeMonth.text_input("MONTH", value=str(row_data.get('MedIntakeMonth', '')))
+        MedIntakeYear = MedIntakeYear.text_input("YEAR", value=str(row_data.get('MedIntakeYear', '')))
 
-        # Medication table
+        # Treatment Plan table
         Med1Check, Med1Name, Med1Dosage, Med1Frequency, Med1Form, Med1Route, Med1Instructions = st.columns(7)
-        Med1Check = Med1Check.text_input("Select [mark x]", value=str(row_data['Med1Check']))
-        Med1Name = Med1Name.text_input("Medication", value=str(row_data['Med1Name']))
-        Med1Dosage = Med1Dosage.text_input("Dosage", value=str(row_data['Med1Dosage']))
-        Med1Frequency = Med1Frequency.text_input("Frequency", value=str(row_data['Med1Frequency']))
-        Med1Form = Med1Form.text_input("Form", value=str(row_data['Med1Form']))
-        Med1Route = Med1Route.text_input("Route", value=str(row_data['Med1Route']))
-        Med1Instructions = Med1Instructions.text_input("Instructions", value=str(row_data['Med1Instructions']))
+        Med1Check = Med1Check.text_input("Select [x]", value=str(row_data.get('Med1Check', '')))
+        Med1Name = Med1Name.text_input("Medication", value=str(row_data.get('Med1Name', '')))
+        Med1Dosage = Med1Dosage.text_input("Dosage", value=str(row_data.get('Med1Dosage', '')))
+        Med1Frequency = Med1Frequency.text_input("Frequency", value=str(row_data.get('Med1Frequency', '')))
+        Med1Form = Med1Form.text_input("Form", value=str(row_data.get('Med1Form', '')))
+        Med1Route = Med1Route.text_input("Route", value=str(row_data.get('Med1Route', '')))
+        Med1Instructions = Med1Instructions.text_input("Instructions", value=str(row_data.get('Med1Instructions', '')))
 
+        Med2Check, Med2Name, Med2Dosage, Med2Frequency, Med2Form, Med2Route, Med2Instructions = st.columns(7)
+        Med2Check = Med2Check.text_input("Select [x]", value=str(row_data.get('Med2Check', '')))
+        Med2Name = Med2Name.text_input("Medication", value=str(row_data.get('Med2Name', '')))
+        Med2Dosage = Med2Dosage.text_input("Dosage", value=str(row_data.get('Med2Dosage', '')))
+        Med2Frequency = Med2Frequency.text_input("Frequency", value=str(row_data.get('Med2Frequency', '')))
+        Med2Form = Med2Form.text_input("Form", value=str(row_data.get('Med2Form', '')))
+        Med2Route = Med2Route.text_input("Route", value=str(row_data.get('Med2Route', '')))
+        Med2Instructions = Med2Instructions.text_input("Instructions", value=str(row_data.get('Med2Instructions', '')))
 
-        num_rows_medication = 4
-        num_columns_medication = 7
-        column_names_medication = ["Mark X", "Medication", "Dosage", "Frequency", "Form", "Route", "Instructions"]
-        header_cols_medication = st.columns(num_columns_medication)
-        for col, col_name in zip(header_cols_medication, column_names_medication):
-            col.write(col_name)
-        for row in range(num_rows_medication):
-            cols = st.columns(num_columns_medication)
-            for i, col in enumerate(cols):
-                col.text_input(column_names_medication[i], key=f"{column_names_medication[i]}_{row}")
-
-        # Medication intake progress section
-        num_rows_progress = 31
-        num_columns_progress = 7
-        column_names_progress = ["Date", "Yes", "No", "Dosage", "Frequency", "Form", "Route"]
-        header_cols_progress = st.columns(num_columns_progress)
-        for col, col_name in zip(header_cols_progress, column_names_progress):
-            col.write(col_name)
-        for row in range(num_rows_progress):
-            cols = st.columns(num_columns_progress)
-            for i, col in enumerate(cols):
-                col.text_input(column_names_progress[i], key=f"{column_names_progress[i]}_{row}_progress")
+        Med3Check, Med3Name, Med3Dosage, Med3Frequency, Med3Form, Med3Route, Med3Instructions = st.columns(7)
+        Med3Check = Med3Check.text_input("Select [x]", value=str(row_data.get('Med3Check', '')))
+        Med3Name = Med3Name.text_input("Medication", value=str(row_data.get('Med3Name', '')))
+        Med3Dosage = Med3Dosage.text_input("Dosage", value=str(row_data.get('Med3Dosage', '')))
+        Med3Frequency = Med3Frequency.text_input("Frequency", value=str(row_data.get('Med3Frequency', '')))
+        Med3Form = Med3Form.text_input("Form", value=str(row_data.get('Med3Form', '')))
+        Med3Route = Med3Route.text_input("Route", value=str(row_data.get('Med3Route', '')))
+        Med3Instructions = Med3Instructions.text_input("Instructions", value=str(row_data.get('Med3Instructions', '')))
 
         # Medication details section
         OTPName, OTPClinician, OTPphone= st.columns(3)
