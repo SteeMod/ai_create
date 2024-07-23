@@ -66,6 +66,12 @@ def main():
                 st.text_input("Route", key=f"route{row}")
             with cols[6]:
                 st.text_input("Instructions", key=f"instructions{row}")
+
+        # Additional fields for medication intake progress
+        MedicationName = st.text_input("MEDICATION NAME")
+        Month = st.text_input("MONTH")
+        Year = st.text_input("YEAR")
+
         # Form submission button
         submitted = st.form_submit_button("Submit")
         if submitted:
