@@ -5,9 +5,9 @@ def main():
 
     with st.form("my_form"):
         # Define the number of rows and columns for your table
-        num_rows = 3  # Example: 3 rows
-        num_columns = 4  # Example: 4 columns (FirstName, LastName, Address, City)
-        column_names = ["Mark X", "Medication", "Dosage", "Frequency"]  # Column headers
+        num_rows = 4  # Example: 4 rows
+        num_columns = 7  
+        column_names = ["Mark X", "Medication", "Dosage", "Frequency", "Form", "Route" "Instructions"]  # Column headers
 
         # Create a header row for column names
         header_cols = st.columns(num_columns)
@@ -25,7 +25,12 @@ def main():
                 st.text_input("Dosage", key=f"addr{row}")
             with cols[3]:
                 st.text_input("Frequency", key=f"freq{row}")
-
+            with cols[4]:
+                st.text_input("Form", key=f"form{row}")
+            with cols[5]:
+                st.text_input("Route", key=f"route{row}")
+            with cols[6]:
+                st.text_input("Instructions", key=f"instructions{row}")
         # Form submission button
         submitted = st.form_submit_button("Submit")
         if submitted:
