@@ -82,7 +82,7 @@ def main():
         container_name = 'data1'
         blob_name = 'out1.csv'
         # Ensure you replace 'your_connection_string' with your actual Azure Blob Storage connection string
-        connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=7RH6SmoiZzhCTgoxeqBj3GkStL1CCZssv1bjUjSLuU+xhVJy4P2QRCHgwrFGshxyFBeqkULxEGGc+AStNDYvOA==;EndpointSuffix=core.windows.net'
+        connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
         df = download_csv_data_from_blob(container_name, blob_name, connection_string)
         generate_form(df)
 
