@@ -4,40 +4,38 @@ def main():
     st.title("Verify Accuracy")
 
     with st.form("my_form"):
-        with st.form("my_form"):
         # Use columns to place fields side by side
-            col1, col2 = st.columns(2)
-        
+        col1, col2 = st.columns(2)
+    
         with col1:
             FirstName = st.text_input("FirstName")
-        
+    
         with col2:
             LastName = st.text_input("LastName")
-        
+    
         Address = st.text_input("Address")
-        
+    
         col3, col4 = st.columns(2)
-         
+     
         with col3:
             City = st.text_input("City")
-        
+    
         with col4:
             State = st.text_input("State")
-            col5, col6 = st.columns(2)
 
         col5, col6 = st.columns(2)
-         
+     
         with col5:
             Zipcode = st.text_input("Zipcode")
-        
+    
         with col6:
             Phone = st.text_input("Phone")
-            
-            col7, col8 = st.columns(2)
         
+        col7, col8 = st.columns(2)
+    
         with col7:
             Allergy1 = st.text_input("Allergy1")
-        
+    
         with col8:
             Allergy2 = st.text_input("Allergy2")
 
@@ -55,11 +53,11 @@ def main():
         for row in range(num_rows):
             cols = st.columns(num_columns)  # Create columns for each row
             with cols[0]:
-                st.text_input("Mark X", key=f"fn{row}")  # Unique key for each input
+                st.text_input("Mark X", key=f"markx{row}")  # Unique key for each input
             with cols[1]:
-                st.text_input("Medname", key=f"medname{row}")
+                st.text_input("Medication", key=f"medname{row}")
             with cols[2]:
-                st.text_input("Dosage", key=f"addr{row}")
+                st.text_input("Dosage", key=f"dosage{row}")
             with cols[3]:
                 st.text_input("Frequency", key=f"freq{row}")
             with cols[4]:
