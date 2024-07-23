@@ -39,6 +39,16 @@ def generate_form(df, row_index=0):
         MedIntakeYear = MedIntakeYear.text_input("YEAR", value=str(row_data['MedIntakeYear']))
 
         # Medication table
+        Med1Check, Med1Name, Med1Dosage, Med1Frequency, Med1Form, Med1Route, Med1Instructions = st.columns(7)
+        Med1Check = Med1Check.text_input("Select [mark x]", value=str(row_data['Med1Check']))
+        Med1Name = Med1Name.text_input("Medication", value=str(row_data['Med1Name']))
+        Med1Dosage = Med1Dosage.text_input("Dosage", value=str(row_data['Med1Dosage']))
+        Med1Frequency = Med1Frequency.text_input("Frequency", value=str(row_data['Med1Frequency']))
+        Med1Form = Med1Form.text_input("Form", value=str(row_data['Med1Form']))
+        Med1Route = Med1Route.text_input("Route", value=str(row_data['Med1Route']))
+        Med1Instructions = Med1Instructions.text_input("Instructions", value=str(row_data['Med1Instructions']))
+
+
         num_rows_medication = 4
         num_columns_medication = 7
         column_names_medication = ["Mark X", "Medication", "Dosage", "Frequency", "Form", "Route", "Instructions"]
