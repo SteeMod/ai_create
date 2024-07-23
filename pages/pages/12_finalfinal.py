@@ -39,9 +39,9 @@ def generate_form(df, row_index=0):
         MedIntakeYear = MedIntakeYear.text_input("YEAR", value=str(row_data['MedIntakeYear']))
 
         # Medication table
-        num_rows_medication = 4
+        num_rows_medication = 1
         num_columns_medication = 7
-        column_names_medication = ["Mark X", "Medication", "Dosage", "Frequency", "Form", "Route", "Instructions"]
+        column_names_medication = ["Med1Check", "Med1Name", "Med1Dosage", "Med1Freq", "Med1Form", "Med1Route", "Med1Instruction"]
         header_cols_medication = st.columns(num_columns_medication)
         for col, col_name in zip(header_cols_medication, column_names_medication):
             col.write(col_name)
@@ -50,10 +50,31 @@ def generate_form(df, row_index=0):
             for i, col in enumerate(cols):
                 col.text_input(column_names_medication[i], key=f"{column_names_medication[i]}_{row}")
 
+        num_rows_medication = 1
+        num_columns_medication = 7
+        column_names_medication = ["Med2Check", "Med2Name", "Med2Dosage", "Med2Freq", "Med2Form", "Med2Route", "Med2Instruction"]
+        header_cols_medication = st.columns(num_columns_medication)
+        for col, col_name in zip(header_cols_medication, column_names_medication):
+            col.write(col_name)
+        for row in range(num_rows_medication):
+            cols = st.columns(num_columns_medication)
+            for i, col in enumerate(cols):
+                col.text_input(column_names_medication[i], key=f"{column_names_medication[i]}_{row}")
         # Medication intake progress section
-        num_rows_progress = 31
+        num_rows_progress = 1
         num_columns_progress = 7
-        column_names_progress = ["Date", "Yes", "No", "Dosage", "Frequency", "Form", "Route"]
+        column_names_progress = ["Day1", "Day1Yes", "Day1No", "Day1Dosage", "Day1Freq", "Day1Form", "Day1Route"]
+        header_cols_progress = st.columns(num_columns_progress)
+        for col, col_name in zip(header_cols_progress, column_names_progress):
+            col.write(col_name)
+        for row in range(num_rows_progress):
+            cols = st.columns(num_columns_progress)
+            for i, col in enumerate(cols):
+                col.text_input(column_names_progress[i], key=f"{column_names_progress[i]}_{row}_progress")
+
+                num_rows_progress = 1
+        num_columns_progress = 7
+        column_names_progress = ["Day2", "Day1Yes", "Day1No", "Day1Dosage", "Day1Freq", "Day1Form", "Day1Route"]
         header_cols_progress = st.columns(num_columns_progress)
         for col, col_name in zip(header_cols_progress, column_names_progress):
             col.write(col_name)
@@ -67,7 +88,7 @@ def generate_form(df, row_index=0):
         OTPName = OTPName.text_input("OTPName", value=str(row_data['OTPName']))
         OTPClinician=OTPClinician.text_input("OTPClinician", value=str(row_data['OTPClinician']))
         OTPphone = OTPphone.text_input("OTPphone", value=str(row_data['OTPphone']))
-        OTPAdress= st.text_input("OTPAdress", value=str(row_data['OTPAdress']))
+        OTPAddress= st.text_input("OTPAdress", value=str(row_data['OTPAddress']))
 
         PharmacyName, PharmacyPhone = st.columns(2)
         PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data['PharmacyName']))
