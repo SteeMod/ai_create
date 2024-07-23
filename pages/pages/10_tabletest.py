@@ -49,16 +49,26 @@ def main():
             for i, col in enumerate(cols):
                 col.text_input(column_names_progress[i], key=f"{column_names_progress[i]}_{row}_progress")
 
+        NameofOTPProgram= st.text_input("OTP Program")
+        Adress = st.text_input("OTP Adress")
+        DoctororClinician = st.text_input("Doctor/Clinician Name")
+        PharmacyName = st.text_input("Pharmacy Name")
+        PharmacyPhone= st.text_input("Pharmacy Phone")    
         
-    NameofOTPProgram= st.text_input("OTP Program")
-    Adress = st.text_input("OTP Adress")
-    DoctororClinician = st.text_input("Doctor/Clinician Name")
-    PharmacyName = st.text_input("Pharmacy Name")
-    PharmacyPhone= st.text_input("Pharmacy Phone")
+        # Medication details section
+        OTPName, OTPClinician, OTPphone= st.columns(3)
+        OTPName = OTPName.text_input("OTPName")
+        OTPClinician=OTPClinician.text_input("OTPClinician")
+        OTPphone = OTPphone.text_input("OTPphone")
+        OTPAdress= st.text_input("OTPAdress")  
 
-# Form submission button
-    submitted = st.form_submit_button("Submit")
-    if submitted:
+        PharmacyName, PharmacyPhone = st.columns(2)
+        PharmacyName=PharmacyName.text_input("PharmacyName")
+        PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone")
+        
+        # Form submission button
+        submitted = st.form_submit_button("Submit")
+        if submitted:
             st.write("Form Submitted!")
 if __name__ == "__main__":
     main()
