@@ -13,10 +13,15 @@ def main():
         with col2:
             last_name = st.text_input("LastName")
         
-        # Continue with other fields
         address = st.text_input("Address")
-        city = st.text_input("City")
-        # Add more fields as needed
+        col3, col4 = st.columns(2)
+         
+        with col3:
+            first_name = st.text_input("City")
+        
+        with col4:
+            last_name = st.text_input("State")
+
         
         # Form submission button
         submitted = st.form_submit_button("Submit")
