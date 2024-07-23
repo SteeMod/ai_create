@@ -20,10 +20,11 @@ def main():
         Allergy2 = Allergy2.text_input("Allergy2")
 
         # Medication details section
-        MedicationName = st.text_input("MEDICATION NAME")
-        Month = st.text_input("MONTH")
-        Year = st.text_input("YEAR")
-
+        col3, col4, col5 = st.columns(3)
+        MedicationName = col3.st.text_input("MEDICATION NAME")
+        Month = col4.st.text_input("MONTH")
+        Year = col5.st.text_input("YEAR")
+        
         # Medication table
         num_rows_medication = 4
         num_columns_medication = 7
@@ -38,8 +39,8 @@ def main():
 
         # Medication intake progress section
         num_rows_progress = 31
-        num_columns_progress = 6
-        column_names_progress = ["Date", "Yes", "No", "Dosage", "Frequency", "Route"]
+        num_columns_progress = 7
+        column_names_progress = ["Date", "Yes", "No", "Dosage", "Frequency", "Form", "Route"]
         header_cols_progress = st.columns(num_columns_progress)
         for col, col_name in zip(header_cols_progress, column_names_progress):
             col.write(col_name)
@@ -49,7 +50,6 @@ def main():
                 col.text_input(column_names_progress[i], key=f"{column_names_progress[i]}_{row}_progress")
 
         
-
     NameofOTPProgram= st.text_input("OTP Program")
     Adress = st.text_input("OTP Adress")
     DoctororClinician = st.text_input("Doctor/Clinician Name")
