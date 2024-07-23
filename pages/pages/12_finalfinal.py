@@ -25,18 +25,18 @@ def generate_form(df, row_index=0):
         City, State = st.columns(2)
         City = City.text_input("City", value=str(row_data['City']))
         State = State.text_input("State", value=str(row_data['State']))
-        Zipcode, Phone = st.columns(2)
-        Zipcode = Zipcode.text_input("Zipcode", value=str(row_data['Zipcode']))
+        ZipCode, Phone = st.columns(2)
+        ZipCode = ZipCode.text_input("ZipCode", value=str(row_data['ZipCode']))
         Phone = Phone.text_input("Phone", value=str(row_data['Phone']))
         Allergy1, Allergy2 = st.columns(2)
         Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data['Allergy1']))
         Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data['Allergy2']))
 
         # Medication details section
-        MedicationName, Month, Year = st.columns(3)
-        MedicationName = MedicationName.text_input("MEDICATION NAME", value=str(row_data['MedicationName']))
-        Month = Month.text_input("MONTH", value=str(row_data['Month']))
-        Year = Year.text_input("YEAR", value=str(row_data['Year']))
+        MedIntakeName, MedIntakeMonth, MedIntakeYear = st.columns(3)
+        MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data['MedIntakeName']))
+        MedIntakeMonth = MedIntakeMonth.text_input("MONTH", value=str(row_data['MedIntakeMonth']))
+        MedIntakeYear = MedIntakeYear.text_input("YEAR", value=str(row_data['MedIntakeYear']))
 
         # Medication table
         num_rows_medication = 4
