@@ -18,8 +18,14 @@ def main():
         city = st.text_input("City")
         # Add more fields as needed
         
+        with st.form ("Medication Intake"):
+            col1row4, col2row4, col3row4, col4row4, col5row4=st.colums(5)
+            with col1row4:
+                st.text_input("Medicationcheckmark")
+            with col2row4: 
+                st.text_input("MedicationName")
         # Form submission button
-        submitted = st.form_submit_button("Submit")
+                submitted = st.form_submit_button("Submit")
         if submitted:
             st.write("Form Submitted!")
 
