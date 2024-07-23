@@ -20,10 +20,10 @@ def main():
         Allergy2 = Allergy2.text_input("Allergy2")
 
         # Medication details section
-        col3, col4, col5 = st.columns(3)
-        MedicationName = col3.st.text_input("MEDICATION NAME")
-        Month = col4.st.text_input("MONTH")
-        Year = col5.st.text_input("YEAR")
+        MedicationName, Month, Year = st.columns(3)
+        MedicationName = MedicationName.st.text_input("MEDICATION NAME")
+        Month = Month.st.text_input("MONTH")
+        Year = Year.st.text_input("YEAR")
         
         # Medication table
         num_rows_medication = 4
