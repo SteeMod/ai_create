@@ -5,8 +5,7 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 # Replace with your Azure Blob Storage details
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
 container_name = "data1"
-blob_name = "out1
-.csv"
+blob_name = "out1.csv"
 
 # Create a blob client using the local file name as the name for the blob
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
