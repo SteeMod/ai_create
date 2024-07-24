@@ -378,11 +378,10 @@ def generate_form(df, row_index=0):
         PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
         PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
-    submit_button = st.form_submit_button(label='Submit')
-
-    if submit_button:
-        st.write("Form submitted successfully!")
-    
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+            st.write("Form Submitted!")
+            
 # Main function to control the app
 def main():
     st.title("Verify Accuracy")
