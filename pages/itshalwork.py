@@ -19,6 +19,9 @@ with open("temp.csv", "wb") as download_file:
 # Load the data into a pandas DataFrame
 df = pd.read_csv("temp.csv")
 
+# Convert the data type to float and replace selected columns with number 1
+df = df.astype(float).replace(selected_columns, 1)
+
 # Get the column names
 columns = df.columns.tolist()
 
