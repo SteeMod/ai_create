@@ -1,36 +1,38 @@
+import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import io
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
-# Azure Blob Storage credentials
-connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
-container_name = 'data1'
-blob_name = 'out1.csv'
+# Replace with your Azure Blob Storage details
+connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
+container_name = "data1"
+blob_name = "out1
+.csv"
 
-# Create a blob client
+# Create a blob client using the local file name as the name for the blob
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 blob_client = blob_service_client.get_blob_client(container_name, blob_name)
 
-# Download the blob data into a stream
-stream = io.BytesIO()
-stream.write(blob_client.download_blob().readall())
-stream.seek(0)
+# Download the blob to a local file
+with open("temp.csv", "wb") as download_file:
+    download_file.write(blob_client.download_blob().readall())
 
-# Load the stream into a DataFrame and transpose it
-df = pd.read_csv(stream).T
+# Load the data into a pandas DataFrame
+df = pd.read_csv("temp.csv")
 
-# Rename the columns
-df.columns = ['Day', 'Yes']
+# Get the column names
+columns = df.columns.tolist()
 
-# Filter rows from 'Day1' to 'Day31'
-df = df.loc['Day1':'Day31']
+# Let the user select a column to pivot on
+pivot_column = st.selectbox("Select a column to pivot on", columns)
 
-# Count 'Yes' entries
-yes_count = (df['Yes'] == 'Yes').sum()
+# Pivot the DataFrame
+pivot_df = df.pivot(columns=pivot_column)
 
-# Create a pie chart
-plt.figure(figsize=(10, 6))
-plt.pie([yes_count, len(df) - yes_count], labels=['Yes', 'No'], autopct='%1.1f%%')
-plt.title('Percentage of "Yes" Entries from Day1 to Day31')
-plt.show()
+# Let the user select a range of rows to display
+row_range = st.slider("Select a range of rows", 0, len(pivot_df), (0, len(pivot_df)))
+
+# Filter the DataFrame by the selected range of rows
+filtered_df = pivot_df.iloc[row_range[0]:row_range[1]]
+
+# Display the filtered DataFrame
+st.dataframe(filtered_df)
