@@ -377,7 +377,7 @@ def generate_form(df, row_index=0):
         PharmacyName, PharmacyPhone = st.columns(2)
         PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
         PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
-
+        submit_button = st.form_submit_button(label='Submit')
 
 # Main function to control the app
 def main():
