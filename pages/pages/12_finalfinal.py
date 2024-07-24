@@ -249,7 +249,7 @@ def generate_form(df, row_index=0):
         Day19Form = Day19Form.text_input("Form19", value=str(row_data.get('Day19Form', '')))
         Day19Route = Day19Route.text_input("Route19", value=str(row_data.get('Day19Route', '')))
 
-    
+       
 
         Day20, Day20Yes, Day20No, Day20Dosage, Day20Freq, Day20Form, Day20Route = st.columns(7)
         Day20 = Day20.text_input("Day20", value=str(row_data.get('Day20', '')))
@@ -385,6 +385,11 @@ def main():
         connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
         df = download_csv_data_from_blob(container_name, blob_name, connection_string)
         generate_form(df)
+
+       #Function to submit form
+        submit_button = st.form_submit_button(label='Submit')
+    if submit_button:
+        st.write(f'You entered: FirstName')
 
 if __name__ == "__main__":
     main()
