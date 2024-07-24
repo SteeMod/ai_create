@@ -388,8 +388,9 @@ def main():
 
        #Function to submit form
         submit_button = st.form_submit_button(label='Submit')
-    if submit_button:
-        st.write(f'You entered: FirstName')
+        if submit_button:
+            st.write(f'You entered: {submit_button}')
+
 
 if __name__ == "__main__":
     main()
