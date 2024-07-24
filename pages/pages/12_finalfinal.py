@@ -95,13 +95,15 @@ def generate_form(df, row_index=0):
         Day2Route = Day2Route.text_input("Route2", value=str(row_data.get('Day2Route', '')))
 
         Day3, Day3Yes, Day3No, Day3Dosage, Day3Freq, Day3Form, Day3Route = st.columns(7)
-        Day3 = Day3.text_input("Day3", value=str(row_data.get('Day3', '')))
-        Day3Yes = Day3Yes.text_input("Yes3", value=str(row_data.get('Day3Yes', '')))
-        Day3No = Day3No.text_input("No3", value=str(row_data.get('Day3No', '')))
-        Day3Dosage = Day3Dosage.text_input("Dosage3", value=str(row_data.get('Day3Dosage', '')))
-        Day3Freq = Day3Freq.text_input("Frequency3", value=str(row_data.get('Day3Freq', '')))
-        Day3Form = Day3Form.text_input("Form3", value=str(row_data.get('Day3Form', '')))
-        Day3Route = Day3Route.text_input("Route3", value=str(row_data.get('Day3Route', '')))
+        Day3 = Day3.text_input("Day3", value=str(row_data.get('Day3', '')), key="Day3")
+        Day3Yes = Day3Yes.text_input("Yes3", value=str(row_data.get('Day3Yes', '')), key="Day3Yes")
+        Day3No = Day3No.text_input("No3", value=str(row_data.get('Day3No', '')), key="Day3No")
+        Day3Dosage = Day3Dosage.text_input("Dosage3", value=str(row_data.get('Day3Dosage', '')), key="Day3Dosage")
+        Day3Freq = Day3Freq.text_input("Frequency3", value=str(row_data.get('Day3Freq', '')), key="Day3Freq")
+        Day3Form = Day3Form.text_input("Form3", value=str(row_data.get('Day3Form', '')), key="Day3Form")
+        Day3Route = Day3Route.text_input("Route3", value=str(row_data.get('Day3Route', '')), key="Day3Route")
+
+        
 
         Day4, Day4Yes, Day4No, Day4Dosage, Day4Freq, Day4Form, Day4Route = st.columns(7)
         Day4 = Day4.text_input("Day4", value=str(row_data.get('Day4', '')))
