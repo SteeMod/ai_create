@@ -6,17 +6,22 @@ from azure.storage.blob import BlobServiceClient
 import os
 from csv import DictWriter
 import asyncio
+import tempfile
 
 async def process_file(file_path, filename):
-    endpoint = os.get('FORM_RECOGNIZER_ENDPOINT', "https://new2two.cognitiveservices.azure.com/")
-    credential = AzureKeyCredential(os.get('FORM_RECOGNIZER_API_KEY', "027ad9245a594c5886cf5d90abecb9d1A"))
+    # Hardcoded variables
+    endpoint = "https://new2two.cognitiveservices.azure.com/"
+    api_key = "027ad9245a594c5886cf5d90abecb9d1A"
+    model_id = "Thessa5vs6"
+    connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
+    container_name = "data1"
+
+    credential = AzureKeyCredential(api_key)
     client = DocumentAnalysisClient(endpoint, credential)
 
-    model_id = os.get('FORM_RECOGNIZER_CUSTOM_MODEL_ID', "Thessa5vs6")
-
     # Create BlobServiceClient
-    blob_service_client = BlobServiceClient.from_connection_string(os.get('AZURE_STORAGE_CONNECTION_STRING', "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"))
-    container_client = blob_service_client.get_container_client(os.get('BLOB_CONTAINER_NAME', "data1"))
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    container_client = blob_service_client.get_container_client(container_name)
     blob_client = container_client.get_blob_client(filename)
 
     # Upload the PDF file to Azure Blob Storage
@@ -55,13 +60,15 @@ def main():
     st.title('Azure AI Document Intelligence with Streamlit')
     uploaded_file = st.file_uploader("Choose a file")
     if uploaded_file is not None:
-        file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
+        file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
         st.write(file_details)
-        file_path = os.path.join('/tmp', secure_filename(uploaded_file.name))
-        with open(file_path, 'wb') as f:
-            f.write(uploaded_file.getbuffer())
-        if os.path.exists(file_path):
-            asyncio.run(process_file(file_path, uploaded_file.name))
+        
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            tmp_file.write(uploaded_file.getbuffer())
+            tmp_file_path = tmp_file.name
+        
+        if os.path.exists(tmp_file_path):
+            asyncio.run(process_file(tmp_file_path, uploaded_file.name))
             st.write('File has been processed and saved to Blob Storage.')
         else:
             st.write('Error: File was not saved correctly.')
