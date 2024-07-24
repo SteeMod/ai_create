@@ -1,7 +1,8 @@
+import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from azure.storage.blob import BlobServiceClient
 import io
+
 # Azure Blob Storage credentials
 connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
 container_name = 'data1'
@@ -19,14 +20,9 @@ stream.seek(0)
 # Load the stream into a DataFrame
 df = pd.read_csv(stream)
 
-# Select columns from 'Day1Yes' to 'Day31Yes'
-selected_columns = df.loc[:, 'Day1Yes':'Day31Yes']
+# Transpose the DataFrame
+df_transposed = df.transpose()
 
-# Count 'Yes' entries for each day
-yes_counts = selected_columns.apply(lambda x: (x == 'Yes').sum())
-
-# Create a pie chart
-plt.figure(figsize=(10, 6))
-plt.pie(yes_counts, labels=yes_counts.index, autopct='%1.1f%%')
-plt.title('Distribution of "Yes" Entries from Day1 to Day31')
-plt.show()
+# Display the transposed DataFrame using Streamlit
+st.title('Transposed CSV Data')
+st.dataframe(df_transposed)
