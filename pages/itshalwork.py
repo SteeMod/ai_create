@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 # Replace with your Azure Blob Storage details
-connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
-container_name = "data1"
-blob_name = "out1.csv"
+connection_string = "your_connection_string"
+container_name = "your_container_name"
+blob_name = "your_blob_name.csv"
 
 # Create a blob client using the local file name as the name for the blob
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
@@ -30,5 +31,10 @@ selected_columns = st.multiselect("Select the columns you're interested in", day
 # Filter the DataFrame based on the selected columns
 filtered_df = df[selected_columns]
 
-# Display the filtered DataFrame
-st.dataframe(filtered_df)
+# Create a pie chart
+fig, ax = plt.subplots()
+ax.pie(filtered_df.sum(), labels=selected_columns, autopct='%1.1f%%')
+ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+# Display the pie chart
+st.pyplot(fig)
