@@ -19,9 +19,6 @@ with open("temp.csv", "wb") as download_file:
 # Load the data into a pandas DataFrame
 df = pd.read_csv("temp.csv")
 
-# Convert the data type to float and replace selected columns with number 1
-df = df.astype(float).replace(selected_columns, 1)
-
 # Get the column names
 columns = df.columns.tolist()
 
@@ -33,6 +30,13 @@ selected_columns = st.multiselect("Select the columns you're interested in", day
 
 # Filter the DataFrame based on the selected columns
 filtered_df = df[selected_columns]
+
+# Convert the selected columns to float and replace non-numeric values with NaN
+for col in selected_columns:
+    filtered_df[col] = pd.to_numeric(filtered_df[col], errors='coerce')
+
+# Filter rows where column value is 1
+filtered_df = filtered_df[filtered_df == 1]
 
 # Create a pie chart
 fig, ax = plt.subplots()
