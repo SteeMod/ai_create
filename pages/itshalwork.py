@@ -1,8 +1,7 @@
-import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from azure.storage.blob import BlobServiceClient
 import io
+from azure.storage.blob import BlobServiceClient
 
 # Azure Blob Storage credentials
 connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
@@ -18,25 +17,20 @@ stream = io.BytesIO()
 stream.write(blob_client.download_blob().readall())
 stream.seek(0)
 
-# Load the stream into a DataFrame
-df = pd.read_csv(stream)
+# Load the stream into a DataFrame and transpose it
+df = pd.read_csv(stream).T
 
-# Transpose the DataFrame
-df_transposed = df.transpose()
+# Rename the columns
+df.columns = ['Day', 'Yes']
 
-# Rename columns for easier access
-df_transposed.columns = df_transposed.iloc[0]
-df_transposed = df_transposed[1:]
+# Filter rows from 'Day1' to 'Day31'
+df = df.loc['Day1':'Day31']
 
-# Calculate the total number of 'Yes' entries
-yes_counts = df_transposed.apply(lambda x: (x == 'Yes').sum())
+# Count 'Yes' entries
+yes_count = (df['Yes'] == 'Yes').sum()
 
 # Create a pie chart
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.pie(yes_counts, labels=yes_counts.index, autopct='%1.1f%%')
-ax.set_title('Distribution of "Yes" Entries from Day1 to Day31')
-
-# Display the pie chart using Streamlit
-st.title('Transposed CSV Data and Pie Chart')
-st.dataframe(df_transposed)
-st.pyplot(fig)
+plt.figure(figsize=(10, 6))
+plt.pie([yes_count, len(df) - yes_count], labels=['Yes', 'No'], autopct='%1.1f%%')
+plt.title('Percentage of "Yes" Entries from Day1 to Day31')
+plt.show()
