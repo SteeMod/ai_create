@@ -21,17 +21,14 @@ df = pd.read_csv("temp.csv")
 # Get the column names
 columns = df.columns.tolist()
 
-# Let the user select a column to pivot on
-pivot_column = st.selectbox("Select a column to pivot on", columns)
+# Filter the column names based on the pattern 'Day#Yes'
+day_columns = [col for col in columns if 'Day' in col and 'Yes' in col]
 
-# Pivot the DataFrame
-pivot_df = df.pivot(columns=pivot_column)
+# Let the user select columns
+selected_columns = st.multiselect("Select the columns you're interested in", day_columns)
 
-# Let the user select a range of rows to display
-row_range = st.slider("Select a range of rows", 0, len(pivot_df), (0, len(pivot_df)))
-
-# Filter the DataFrame by the selected range of rows
-filtered_df = pivot_df.iloc[row_range[0]:row_range[1]]
+# Filter the DataFrame based on the selected columns
+filtered_df = df[selected_columns]
 
 # Display the filtered DataFrame
 st.dataframe(filtered_df)
