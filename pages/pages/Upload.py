@@ -43,12 +43,9 @@ def main():
         with open(timestamped_blob_name, 'wb') as pdf_file:
             pdf_file.write(blob_stream)
 
-        # Create a new blob client for the PDF file
-        pdf_blob_client = container_client.get_blob_client(timestamped_blob_name)
-
         # Upload the PDF to Azure Blob Storage
         with open(timestamped_blob_name, 'rb') as data:
-            pdf_blob_client.upload_blob(data, overwrite=True)
+            block_blob_client.upload_blob(data, overwrite=True)
 
         logging.info(f"PDF file '{timestamped_blob_name}' downloaded and uploaded successfully.")
 
