@@ -1,7 +1,7 @@
 import pandas as pd
-import io
+import matplotlib.pyplot as plt
 from azure.storage.blob import BlobServiceClient
-
+import io
 # Azure Blob Storage credentials
 connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
 container_name = 'data1'
