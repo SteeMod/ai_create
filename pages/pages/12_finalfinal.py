@@ -249,14 +249,7 @@ def generate_form(df, row_index=0):
         Day19Form = Day19Form.text_input("Form19", value=str(row_data.get('Day19Form', '')))
         Day19Route = Day19Route.text_input("Route19", value=str(row_data.get('Day19Route', '')))
 
-        Day19_col, Day19Yes_col, Day19No_col, Day19Dosage_col, Day19Freq_col, Day19Form_col, Day19Route_col = st.columns(7)
-        Day19 = Day19_col.text_input("Day19", value=str(row_data.get('Day19', '')))
-        Day19Yes = Day19Yes_col.text_input("Yes19", value=str(row_data.get('Day19Yes', '')))
-        Day19No = Day19No_col.text_input("No19", value=str(row_data.get('Day19No', '')))
-        Day19Dosage = Day19Dosage_col.text_input("Dosage19", value=str(row_data.get('Day19Dosage', '')))
-        Day19Freq = Day19Freq_col.text_input("Frequency19", value=str(row_data.get('Day19Freq', '')))
-        Day19Form = Day19Form_col.text_input("Form19", value=str(row_data.get('Day19Form', '')))
-        Day19Route = Day19Route_col.text_input("Route19", value=str(row_data.get('Day19Route', '')))
+    
 
         Day20, Day20Yes, Day20No, Day20Dosage, Day20Freq, Day20Form, Day20Route = st.columns(7)
         Day20 = Day20.text_input("Day20", value=str(row_data.get('Day20', '')))
