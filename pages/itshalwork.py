@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 from azure.storage.blob import BlobServiceClient
 import io
 
@@ -23,6 +24,19 @@ df = pd.read_csv(stream)
 # Transpose the DataFrame
 df_transposed = df.transpose()
 
-# Display the transposed DataFrame using Streamlit
-st.title('Transposed CSV Data')
+# Rename columns for easier access
+df_transposed.columns = df_transposed.iloc[0]
+df_transposed = df_transposed[1:]
+
+# Calculate the total number of 'Yes' entries
+yes_counts = df_transposed.apply(lambda x: (x == 'Yes').sum())
+
+# Create a pie chart
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.pie(yes_counts, labels=yes_counts.index, autopct='%1.1f%%')
+ax.set_title('Distribution of "Yes" Entries from Day1 to Day31')
+
+# Display the pie chart using Streamlit
+st.title('Transposed CSV Data and Pie Chart')
 st.dataframe(df_transposed)
+st.pyplot(fig)
