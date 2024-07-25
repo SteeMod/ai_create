@@ -79,8 +79,10 @@ def main(uploaded_file):
 
     except Exception as e:
         logging.error(f"An error occurred: {e}")
+        st.error(f"An error occurred: {e}")
 
 if __name__ == '__main__':
     uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
+    submit_button = st.button('Submit')
+    if uploaded_file is not None and submit_button:
         main(uploaded_file)
