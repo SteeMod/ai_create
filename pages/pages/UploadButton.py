@@ -81,10 +81,11 @@ def main(uploaded_file):
         st.error(f"An error occurred: {e}")
 
 if __name__ == '__main__':
-    uploaded_file = st.file_uploader("Choose a file")
+    uploaded_file = st.file_uploader("Choose a file", type=['pdf'])
     submit_button = st.button('Submit')
     if uploaded_file is not None and submit_button:
         main(uploaded_file)
+
 
 
 
