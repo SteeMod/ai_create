@@ -24,7 +24,6 @@ def main():
 
         # Generate a timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        original_blob_name = os.getenv('BLOB_NAME', "test4.pdf")
         file_extension = os.path.splitext(original_blob_name)[1]
         timestamped_blob_name = f"{timestamp}{file_extension}"
 
