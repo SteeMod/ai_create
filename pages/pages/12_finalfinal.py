@@ -387,9 +387,15 @@ def main():
         generate_form(df)
 
        #Function to submit form
-        submit_button = st.form_submit_button(label='Submit')
-        if submit_button:
-            st.write(f'You entered: {submit_button}')
+        with st.form("my_form"):
+                st.write("Inside the form")
+slider_val = st.slider("Form slider")
+checkbox_val = st.checkbox("Form checkbox")
+
+   # Every form must have a submit button.
+submitted = st.form_submit_button("Submit")
+if submitted:
+            st.write("slider", slider_val, "checkbox", checkbox_val)
 
 
 if __name__ == "__main__":
