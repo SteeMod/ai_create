@@ -13,7 +13,8 @@ blob_service_client = BlobServiceClient.from_connection_string(connection_string
 blob_list = blob_service_client.get_container_client(container_name).list_blobs()
 
 # Get the names of the blobs (files) in the container
-file_list = [blob.name for blob in blob_list]
+# Only select files with prefix 'form_'
+file_list = [blob.name for blob in blob_list if blob.name.startswith('form_')]
 
 # Create a dropdown list for the user to select a file
 selected_file = st.selectbox('Select a file to download', file_list)
