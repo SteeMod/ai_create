@@ -1,8 +1,9 @@
 import streamlit as st
-import base64
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import io
 import PyPDF2
+from PyPDF2.pdf import PageObject
+import base64
 
 # Azure blob storage details
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
@@ -29,21 +30,14 @@ def get_file_content(file_name):
     # Create a BytesIO object
     pdf_data = io.BytesIO(download_stream)
 
-    # Create a PDF file reader
-    pdf_reader = PyPDF2.PdfReader(pdf_data)
-
-    # Initialize an empty string to hold the PDF text
-    pdf_text = ""
-
-    # Loop through each page in the PDF and extract the text
-    for page_num in range(len(pdf_reader.pages)):  # Change this line
-        pdf_text += pdf_reader.pages[page_num].extract_text()  # And this line
-
-    return pdf_text
+    return pdf_data
 
 # Get the content of the selected file
 file_content = get_file_content(selected_file)
 
+# Convert the BytesIO object to base64 encoded string
+b64 = base64.b64encode(file_content.getvalue()).decode()
+
 # Display the selected file content
-st.text("Displaying the content of the selected file:")
-st.write(file_content)
+st.text("Displaying the selected file:")
+st.markdown(f'<embed src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf">', unsafe_allow_html=True)
