@@ -36,8 +36,8 @@ def get_file_content(file_name):
     pdf_text = ""
 
     # Loop through each page in the PDF and extract the text
-    for page_num in range(pdf_reader.numPages):
-        pdf_text += pdf_reader.getPage(page_num).extractText()
+    for page_num in range(len(pdf_reader.pages)):  # Change this line
+        pdf_text += pdf_reader.pages[page_num].extractText()  # And this line
 
     return pdf_text
 
