@@ -30,7 +30,7 @@ def get_file_content(file_name):
     pdf_data = io.BytesIO(download_stream)
 
     # Create a PDF file reader
-    pdf_reader = PyPDF2.PdfFileReader(pdf_data)
+    pdf_reader = PyPDF2.PdfReader(pdf_data)
 
     # Initialize an empty string to hold the PDF text
     pdf_text = ""
