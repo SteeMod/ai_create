@@ -16,7 +16,7 @@ def generate_form(df, row_index=0):
         st.write("No data found in CSV or index out of range")
         return
     row_data = df.iloc[row_index]
-    with st.form("my_form"):
+    with st.form("Review"):
         # Use columns to place fields side by side
         col1, col2 = st.columns(2)
         FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
@@ -387,16 +387,9 @@ def main():
         generate_form(df)
 
        #Function to submit form
-        with st.form("my_form"):
-                st.write("Inside the form")
-slider_val = st.slider("Form slider")
-checkbox_val = st.checkbox("Form checkbox")
-
-   # Every form must have a submit button.
-submitted = st.form_submit_button("Submit")
-if submitted:
-            st.write("slider", slider_val, "checkbox", checkbox_val)
-
+        submit_button = st.form_submit_button(label='Submit')
+    if st.submit_button:
+        st.write(f'You entered: FirstName')
 
 if __name__ == "__main__":
     main()
