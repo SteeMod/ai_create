@@ -387,9 +387,8 @@ def main():
         generate_form(df)
 
        #Function to submit form
-        submit_button = st.form_submit_button(label='Submit')
-    if st.submit_button:
-        st.write(f'You entered: FirstName')
-
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            st.write("Form Submitted!")
 if __name__ == "__main__":
     main()
