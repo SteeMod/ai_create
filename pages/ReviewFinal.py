@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from io import StringIO
+from azure.storage.blob import BlobClient
+from azure.storage.blob import BlobServiceClient
+from io import StringIO, BytesIO
 import csv
 
 # Function to download CSV data from Azure Blob Storage
@@ -10,6 +13,9 @@ def download_csv_data_from_blob(container_name, blob_name, connection_string):
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
     blob_data = blob_client.download_blob()
     return pd.read_csv(StringIO(blob_data.content_as_text()))
+
+    
+  
 
 # Generate and pre-populate the form based on the CSV data
 def generate_form(df, row_index=0):
@@ -378,10 +384,8 @@ def generate_form(df, row_index=0):
         submitted = st.form_submit_button("Submit")
         if submitted:
             st.write("Form Submitted!")
-
-
- # Create a dictionary with the form data
-            data = {
+        
+        data = {
                 'FirstName': FirstName,
                 'LastName': LastName,
                 'Address': Address,
@@ -405,13 +409,24 @@ def generate_form(df, row_index=0):
                 'PharmacyName': PharmacyName,
                 'PharmacyPhone': PharmacyPhone
             }
+             # Convert dictionary to CSV
+        csv_data = StringIO()
+        writer = csv.DictWriter(csv_data, fieldnames=data.keys())
+        writer.writeheader()
+        writer.writerow(data)
+        csv_data.seek(0)
 
-            # Convert dictionary to CSV
-            csv_data = StringIO()
-            writer = csv.DictWriter(csv_data, fieldnames=data.keys())
-            writer.writeheader()
-            writer.writerow(data)
-            csv_data.seek(0)
+            # Convert CSV string to bytes
+        csv_bytes = BytesIO(csv_data.getvalue().encode('utf-8'))
+
+            # Upload the CSV content to Azure Blob Storage
+        container_name = 'data1/ReviewedFiles'
+        blob_name = 'reviewedfiles.csv'
+        connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEWV0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
+        upload_csv_data_to_blob(container_name, blob_name, connection_string, csv_bytes)
+        st.write("Form Submitted and Data Saved to Azure Blob Storage!")
+        
+
 
 # Main function to control the app
 def main():
