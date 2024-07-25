@@ -2,25 +2,24 @@ import streamlit as st
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
 from azure.storage.blob import BlobServiceClient
-import os
 from csv import DictWriter
 from datetime import datetime
 import logging
-
+import os
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 def main(uploaded_file):
     try:
-        endpoint = os.getenv('https://new2two.cognitiveservices.azure.com/')
-        credential = AzureKeyCredential(os.getenv('027ad9245a594c5886cf5d90abecb9d1'))
+        endpoint = "https://new2two.cognitiveservices.azure.com/"
+        credential = AzureKeyCredential("027ad9245a594c5886cf5d90abecb9d1")
         client = DocumentAnalysisClient(endpoint, credential)
 
-        model_id = os.getenv('Thessa5v6')
+        model_id = "Thessa5vs6"
 
         # Create BlobServiceClient
-        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'))
-        container_client = blob_service_client.get_container_client(os.getenv('data1'))
+        blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net")
+        container_client = blob_service_client.get_container_client("data1")
 
         # Generate a timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
