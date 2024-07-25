@@ -373,6 +373,11 @@ def generate_form(df, row_index=0):
 
     
 
+ # Submit button
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            st.write("Form Submitted!")
+
 # Main function to control the app
 def main():
     st.title("Verify Accuracy")
@@ -386,9 +391,5 @@ def main():
         df = download_csv_data_from_blob(container_name, blob_name, connection_string)
         generate_form(df)
 
-       #Function to submit form
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            st.write("Form Submitted!")
 if __name__ == "__main__":
     main()
