@@ -1,6 +1,8 @@
 import streamlit as st
 import base64
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+import io
+import PyPDF2
 
 # Azure blob storage details
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
@@ -22,27 +24,26 @@ selected_file = st.selectbox('Select a file to download', file_list)
 # Function to get file content given file name
 def get_file_content(file_name):
     blob_client = blob_service_client.get_blob_client(container_name, file_name)
-    download_stream = blob_client.download_blob()
-    try:
-        return download_stream.readall().decode('utf-8')
-    except UnicodeDecodeError:
-        return "Cannot display content. The file is not in UTF-8 format."
+    download_stream = blob_client.download_blob().readall()
 
+    # Create a BytesIO object
+    pdf_data = io.BytesIO(download_stream)
 
-# Function to make the file downloadable
-def get_download_link(file_name, file_content):
-    b64 = base64.b64encode(file_content).decode()  # some strings <-> bytes conversions necessary here
-    button_uuid = st.button("Select Form")
-    if button_uuid:
-        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{file_name}">Download Form</a>'
-        st.markdown(href, unsafe_allow_html=True)
+    # Create a PDF file reader
+    pdf_reader = PyPDF2.PdfFileReader(pdf_data)
+
+    # Initialize an empty string to hold the PDF text
+    pdf_text = ""
+
+    # Loop through each page in the PDF and extract the text
+    for page_num in range(pdf_reader.numPages):
+        pdf_text += pdf_reader.getPage(page_num).extractText()
+
+    return pdf_text
 
 # Get the content of the selected file
 file_content = get_file_content(selected_file)
 
-# Show the download link
-get_download_link(selected_file, file_content)
-
 # Display the selected file content
 st.text("Displaying the content of the selected file:")
-st.write(file_content.decode())
+st.write(file_content)
