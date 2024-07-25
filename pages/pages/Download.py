@@ -38,3 +38,7 @@ file_content = get_file_content(selected_file)
 
 # Show the download link
 get_download_link(selected_file, file_content)
+
+# Display the selected file content
+st.text("Displaying the content of the selected file:")
+st.write(file_content.decode())
