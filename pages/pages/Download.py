@@ -23,14 +23,18 @@ selected_file = st.selectbox('Select a file to download', file_list)
 def get_file_content(file_name):
     blob_client = blob_service_client.get_blob_client(container_name, file_name)
     download_stream = blob_client.download_blob()
-    return download_stream.readall()
+    try:
+        return download_stream.readall().decode('utf-8')
+    except UnicodeDecodeError:
+        return "Cannot display content. The file is not in UTF-8 format."
+
 
 # Function to make the file downloadable
 def get_download_link(file_name, file_content):
     b64 = base64.b64encode(file_content).decode()  # some strings <-> bytes conversions necessary here
-    button_uuid = st.button("Download File")
+    button_uuid = st.button("Select Form")
     if button_uuid:
-        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{file_name}">Select Form</a>'
+        href = f'<a href="data:application/octet-stream;base64,{b64}" download="{file_name}">Download Form</a>'
         st.markdown(href, unsafe_allow_html=True)
 
 # Get the content of the selected file
