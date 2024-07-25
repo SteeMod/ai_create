@@ -2,7 +2,7 @@ import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import io
 import PyPDF2
-from PyPDF2.pdf import PageObject
+from PyPDF2 import PageObject
 import base64
 
 # Azure blob storage details
