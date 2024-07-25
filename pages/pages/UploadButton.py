@@ -33,10 +33,13 @@ def main(uploaded_file):
 
         # Upload the PDF to Azure Blob Storage
         pdf_blob_client.upload_blob(uploaded_file, overwrite=True)
-
         logging.info(f"PDF file '{timestamped_blob_name}' uploaded successfully.")
 
-        poller = client.begin_analyze_document(model_id=model_id, document=uploaded_file)
+        # Download the blob to a stream
+        downloaded_blob = pdf_blob_client.download_blob().readall()
+
+        # Analyze the document from the blob
+        poller = client.begin_analyze_document(model_id=model_id, document=downloaded_blob)
         result = poller.result()
 
         if not result.documents:
