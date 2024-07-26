@@ -42,7 +42,7 @@ def download_latest_csv_from_blob(container_name, connection_string):
             csv_file.write(blob_client.download_blob().readall())
         
         # Load the CSV data into a DataFrame
-        df = pd.read_csv('latest.csv', error_bad_lines=False)
+        df = pd.read_csv('latest.csv', on_bad_lines='skip')
         
         return df
     except Exception as e:
@@ -86,7 +86,7 @@ def generate_form(df, row_index=0):
                 'Allergy2': Allergy2
             }
             new_df = pd.DataFrame([new_data])
-            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'ANODABOSS.csv', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'ANODABOSS.csv', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 
 # Example usage
 def main():
