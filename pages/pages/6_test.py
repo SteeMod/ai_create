@@ -438,8 +438,6 @@ with st.form("Review"):
                     'Med4Route': [Med4Route],
                     'Med4Instructions': [Med4Instructions]
                 })
-
-
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
                 upload_blob_data('data1', blob_name, form_data)
