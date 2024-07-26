@@ -38,8 +38,7 @@ def upload_blob_data(container_name, blob_name, data):
         st.write(f"Error occurred: {e}")
 
 # Review button
-with st.button("Review"):
-    
+if st.button("Review"):
     latest_blob = get_latest_blob('data1')
     if latest_blob is not None:
         data = download_blob_data(latest_blob)
@@ -76,4 +75,3 @@ with st.button("Review"):
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
                 upload_blob_data('data1', blob_name, form_data)
-
