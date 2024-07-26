@@ -63,7 +63,7 @@ def generate_form(df, row_index=0):
 def main():
     st.title("Submit Form Data to Azure Blob Storage")
     # Load your CSV data into a DataFrame
-    df = pd.read_csv('your_csv_file.csv')
+    df = pd.read_csv('out1.csv')
     generate_form(df)
 
 if __name__ == "__main__":
