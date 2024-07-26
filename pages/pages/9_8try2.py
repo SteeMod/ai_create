@@ -80,7 +80,6 @@ def generate_form(df, row_index=0):
         # When the form is submitted, save the data to a new DataFrame and upload it to Blob Storage
         submitted = st.form_submit_button("Submit")
         if submitted:
-            st.write("Form submitted")  # Debug statement
             new_data = {
                 'FirstName': FirstName,
                 'LastName': LastName,
@@ -93,9 +92,7 @@ def generate_form(df, row_index=0):
                 'Allergy2': Allergy2
             }
             new_df = pd.DataFrame([new_data])
-            st.write(new_df)  # Debug statement to check the DataFrame
-            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyMDqJWDj3pG0FzJCTkCakn/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
-
+            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'ANODABOSS.csv', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 # Example usage
 def main():
     st.title("Submit Form Data to Azure Blob Storage")
