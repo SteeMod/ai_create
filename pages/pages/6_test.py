@@ -29,9 +29,14 @@ try:
     downloader = blob_client.download_blob()
     downloader.readinto(stream)
 
+
     # Convert the stream to a pandas dataframe
     stream.seek(0)
     df = pd.read_csv(stream)
+
+    # Display the range of columns from Day1Yes to Day31Yes in Streamlit
+    st.write(df.loc[:, 'Day1Yes':'Day31Yes'])
+    
 
     # Convert range of columns from Day1Yes to Day31Yes to single column 'Yes'
     df['Yes'] = df.loc[:, 'Day1Yes':'Day31Yes'].sum(axis=1)
