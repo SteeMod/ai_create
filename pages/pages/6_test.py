@@ -42,7 +42,7 @@ def download_latest_csv_from_blob(container_name, connection_string):
             csv_file.write(blob_client.download_blob().readall())
         
         # Load the CSV data into a DataFrame
-        df = pd.read_csv('latest.csv')
+        df = pd.read_csv('latest.csv', error_bad_lines=False)
         
         return df
     except Exception as e:
