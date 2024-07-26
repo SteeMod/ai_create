@@ -1,89 +1,70 @@
-import streamlit as st
-from azure.ai.formrecognizer import DocumentAnalysisClient
-from azure.core.credentials import AzureKeyCredential
 from azure.storage.blob import BlobServiceClient
+import csv
 import os
-from csv import DictWriter
-from datetime import datetime
-import logging
+import streamlit as st
+import pandas as pd
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Function to upload CSV data to Azure Blob Storage
+def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
+    # Create a BlobServiceClient object which will be used to create a container client
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+    
+    # Save DataFrame to CSV
+    df.to_csv('temp.csv', index=False)
+    
+    # Upload the created file
+    with open('temp.csv', 'rb') as data:
+        blob_client.upload_blob(data, overwrite=True)
+    
+    # Delete the temporary file
+    os.remove('temp.csv')
 
+# Generate and pre-populate the form based on the CSV data
+def generate_form(df, row_index=0):
+    if df.empty or row_index >= len(df):
+        st.write("No data found in CSV or index out of range")
+        return
+    row_data = df.iloc[row_index]
+    with st.form("Review"):
+        
+        col1, col2 = st.columns(2)
+        FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
+        LastName = col2.text_input("LastName", value=str(row_data.get('LastName', '')))
+        Address = st.text_input("Address", value=str(row_data.get('Address', '')))
+        City, State = st.columns(2)
+        City = City.text_input("City", value=str(row_data.get('City', '')))
+        State = State.text_input("State", value=str(row_data.get('State', '')))
+        ZipCode, Phone = st.columns(2)
+        ZipCode = ZipCode.text_input("ZipCode", value=str(row_data.get('ZipCode', '')))
+        Phone = Phone.text_input("Phone", value=str(row_data.get('Phone', '')))
+        Allergy1, Allergy2 = st.columns(2)
+        Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
+        Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
+
+        # When the form is submitted, save the data to a new DataFrame and upload it to Blob Storage
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            new_data = {
+                'FirstName': FirstName,
+                'LastName': LastName,
+                'Address': Address,
+                'City': City,
+                'State': State,
+                'ZipCode': ZipCode,
+                'Phone': Phone,
+                'Allergy1': Allergy1,
+                'Allergy2': Allergy2
+            }
+            new_df = pd.DataFrame([new_data])
+            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'ANODABOSS.csv', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+
+# Example usage
 def main():
-    try:
-        endpoint = os.getenv('FORM_RECOGNIZER_ENDPOINT', "https://new2two.cognitiveservices.azure.com/")
-        credential = AzureKeyCredential(os.getenv('FORM_RECOGNIZER_API_KEY', "027ad9245a594c5886cf5d90abecb9d1"))
-        client = DocumentAnalysisClient(endpoint, credential)
+    st.title("Submit Form Data to Azure Blob Storage")
+    # Load your CSV data into a DataFrame
+    df = pd.read_csv('your_csv_file.csv')
+    generate_form(df)
 
-        model_id = os.getenv('FORM_RECOGNIZER_CUSTOM_MODEL_ID', "Thessa5vs6")
-
-        # Create BlobServiceClient
-        blob_service_client = BlobServiceClient.from_connection_string(os.getenv('AZURE_STORAGE_CONNECTION_STRING', "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"))
-        container_client = blob_service_client.get_container_client(os.getenv('BLOB_CONTAINER_NAME', "data1"))
-
-        # Generate a timestamped filename
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        original_blob_name = os.getenv('BLOB_NAME', "test4.pdf")
-        file_extension = os.path.splitext(original_blob_name)[1]
-        timestamped_blob_name = f"{timestamp}{file_extension}"
-
-        block_blob_client = container_client.get_blob_client(original_blob_name)
-
-        # Check if the blob exists
-        if not block_blob_client.exists():
-            logging.error(f"Blob '{original_blob_name}' does not exist.")
-            return
-
-        # Download blob content to a stream
-        downloader = block_blob_client.download_blob()
-        blob_stream = downloader.readall()
-
-        poller = client.begin_analyze_document(model_id=model_id, document=blob_stream)
-        result = poller.result()
-
-        if not result.documents:
-            raise Exception("Expected at least one document in the result.")
-
-        document = result.documents[0]
-
-        # Create a CSV writer
-        csv_filename = f'result_{timestamp}.csv'
-        with open(csv_filename, mode='w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = [name for name in document.fields.keys()]
-            writer = DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-
-            # Transform document.fields into a format suitable for csv-writer
-            record = {}
-            for key, field in document.fields.items():
-                if field.value_type == 'dictionary' and field.value and 'rows' in field.value:
-                    # Check if the object is a table
-                    if isinstance(field.value['rows'], list):
-                        # Handle table data
-                        for rowIndex, row in enumerate(field.value['rows']):
-                            if row and isinstance(row, list):
-                                for cellIndex, cell in enumerate(row):
-                                    record[f"{key}_row{rowIndex}_cell{cellIndex}"] = cell.content
-                else:
-                    # Handle regular fields
-                    record[key] = field.content if field.content else field.value
-
-            writer.writerow(record)
-
-        # Create a new blob client for the CSV file
-        csv_blob_client = container_client.get_blob_client(csv_filename)
-
-        # Upload the CSV file to Azure Blob Storage
-        with open(csv_filename, 'rb') as data:
-            csv_blob_client.upload_blob(data, overwrite=True)
-
-        logging.info(f"CSV file '{csv_filename}' uploaded successfully.")
-
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
-
-if __name__ == '__main__':
-    uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
-        main()
+if __name__ == "__main__":
+    main()
