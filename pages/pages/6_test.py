@@ -33,6 +33,9 @@ try:
     stream.seek(0)
     df = pd.read_csv(stream)
 
+    # Display the dataframe in Streamlit
+    st.write(df)
+
     # Rename the file with a timestamp and save it back to Azure Blob Storage
     new_blob_name = "ReviewedFiles/review_" + datetime.now().strftime('%Y%m%d%H%M%S') + ".csv"
     new_blob_client = blob_service_client.get_blob_client(container_name, new_blob_name)
@@ -41,4 +44,4 @@ try:
         new_blob_client.upload_blob(data)
 
 except Exception as e:
-    print("An error occurred:", str(e))
+    st.write("An error occurred:", str(e))
