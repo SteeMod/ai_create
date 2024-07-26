@@ -5,9 +5,11 @@ import pandas as pd
 from datetime import datetime
 
 # Function to upload CSV data to Azure Blob Storage
-def upload_csv_data_to_blob(df, container_name, connection_string):
+def upload_csv_data_to_blob(df):
     try:
         st.write("Starting upload_csv_data_to_blob")  # Debug statement
+        connection_string = os.getenv('AZURE_CONNECTION_STRING')
+        container_name = os.getenv('AZURE_CONTAINER_NAME')
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         
         # Generate a timestamped blob name
@@ -30,9 +32,11 @@ def upload_csv_data_to_blob(df, container_name, connection_string):
         st.error(f"Error uploading CSV to blob: {e}")
 
 # Function to download the latest CSV data from Azure Blob Storage
-def download_latest_csv_from_blob(container_name, connection_string):
+def download_latest_csv_from_blob():
     try:
         st.write("Starting download_latest_csv_from_blob")  # Debug statement
+        connection_string = os.getenv('AZURE_CONNECTION_STRING')
+        container_name = os.getenv('AZURE_CONTAINER_NAME')
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         container_client = blob_service_client.get_container_client(container_name)
         
@@ -92,7 +96,7 @@ def generate_form(df, row_index=0):
                 'Allergy2': Allergy2
             }
             new_df = pd.DataFrame([new_data])
-            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+            upload_csv_data_to_blob(new_df)
 
 # Example usage
 def main():
@@ -102,7 +106,7 @@ def main():
     if st.button("Review"):
         st.write("Review button clicked")  # Debug statement
         # Load the latest CSV data into a DataFrame
-        df = download_latest_csv_from_blob('data1', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+        df = download_latest_csv_from_blob()
         generate_form(df)
 
 if __name__ == "__main__":
