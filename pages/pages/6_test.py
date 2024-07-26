@@ -105,8 +105,8 @@ with st.form("Review"):
             # Treatment Plan table
             Day1, Day1Yes, Day1No, Day1Dosage, Day1Freq, Day1Form, Day1Route = st.columns(7)
             Day1 = Day1.text_input("Day1", value=str(row_data.get('Day1', '')))
-            Day1Yes = Day1Yes.text_input("Yes1", value=str(row_data.get('Day1Yes', '')))
-            Day1No = Day1No.text_input("No1", value=str(row_data.get('Day1No', '')))
+            Day1Yes = Day1Yes.text_input("Day1Yes", value=str(row_data.get('Day1Yes', '')))
+            Day1No = Day1No.text_input("Day1No", value=str(row_data.get('Day1No', '')))
             Day1Dosage = Day1Dosage.text_input("Dosage1", value=str(row_data.get('Day1Dosage', '')))
             Day1Freq = Day1Freq.text_input("Frequency1", value=str(row_data.get('Day1Freq', '')))
             Day1Form = Day1Form.text_input("Form1", value=str(row_data.get('Day1Form', '')))
