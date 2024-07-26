@@ -33,15 +33,21 @@ try:
     stream.seek(0)
     df = pd.read_csv(stream)
 
+    # Convert range of columns from Day1Yes to Day31Yes to single column 'Yes'
+    df['Yes'] = df.loc[:, 'Day1Yes':'Day31Yes'].sum(axis=1)
+
+    # Create pie chart
+    yes_count = df['Yes'].sum()
+    total_count = df.shape[0]
+    labels = ['Yes', 'No']
+    sizes = [yes_count, total_count - yes_count]
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    st.pyplot(fig1)
+
     # Display the dataframe in Streamlit
     st.write(df)
-
-    # Rename the file with a timestamp and save it back to Azure Blob Storage
-    new_blob_name = "ReviewedFiles/review_" + datetime.now().strftime('%Y%m%d%H%M%S') + ".csv"
-    new_blob_client = blob_service_client.get_blob_client(container_name, new_blob_name)
-    df.to_csv(new_blob_name, index=False)
-    with open(new_blob_name, "rb") as data:
-        new_blob_client.upload_blob(data)
 
 except Exception as e:
     st.write("An error occurred:", str(e))
