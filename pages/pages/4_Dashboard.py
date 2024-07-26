@@ -17,8 +17,8 @@ blob_service_client = BlobServiceClient.from_connection_string(connection_string
 container_client = blob_service_client.get_container_client(container_name)
 
 # Get the latest blob based on the timestamp in the filename
-blobs_list = container_client.list_blobs(name_starts_with="data1/ReviewedFiles/reviewed_")
-blobs_list = sorted(blobs_list, key=lambda x: datetime.strptime(re.search(r'reviewed_(.*).csv', x.name).group(1), '%Y%m%d%H%M%S'), reverse=True)
+blobs_list = container_client.list_blobs(name_starts_with="data1/ReviewedFiles/review_")
+blobs_list = sorted(blobs_list, key=lambda x: datetime.strptime(re.search(r'review_(.*).csv', x.name).group(1), '%Y%m%d%H%M%S'), reverse=True)
 blob_name = blobs_list[0].name
 
 blob_client = blob_service_client.get_blob_client(container_name, blob_name)
