@@ -1,14 +1,10 @@
-#This code review and submits 
-
 from azure.storage.blob import BlobServiceClient
-import csv
 import os
 import streamlit as st
 import pandas as pd
 
 # Function to upload CSV data to Azure Blob Storage
 def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
-    # Create a BlobServiceClient object which will be used to create a container client
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
     
@@ -21,6 +17,31 @@ def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
     
     # Delete the temporary file
     os.remove('temp.csv')
+
+# Function to download the latest CSV data from Azure Blob Storage
+def download_latest_csv_from_blob(container_name, connection_string):
+    try:
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        container_client = blob_service_client.get_container_client(container_name)
+        
+        # Get the list of all blobs in the container
+        blob_list = container_client.list_blobs()
+        
+        # Find the latest blob based on the name (assuming the name includes a timestamp or some identifier that increases with each new file)
+        latest_blob_name = max(blob_list, key=lambda b: b.last_modified).name
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=latest_blob_name)
+        
+        # Download the blob to a CSV
+        with open('latest.csv', 'wb') as csv_file:
+            csv_file.write(blob_client.download_blob().readall())
+        
+        # Load the CSV data into a DataFrame
+        df = pd.read_csv('latest.csv', on_bad_lines='skip')
+        
+        return df
+    except Exception as e:
+        st.error(f"Error downloading CSV from blob: {e}")
+        return pd.DataFrame()
 
 # Generate and pre-populate the form based on the CSV data
 def generate_form(df, row_index=0):
@@ -64,9 +85,12 @@ def generate_form(df, row_index=0):
 # Example usage
 def main():
     st.title("Submit Form Data to Azure Blob Storage")
-    # Load your CSV data into a DataFrame
-    df = pd.read_csv('out1.csv')
-    generate_form(df)
+    
+    # Add a button to review the latest CSV
+    if st.button("Review"):
+        # Load the latest CSV data into a DataFrame
+        df = download_latest_csv_from_blob('data1/CookedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+        generate_form(df)
 
 if __name__ == "__main__":
     main()
