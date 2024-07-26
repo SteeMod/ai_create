@@ -1,72 +1,78 @@
-#This code review and submits 
-
-from azure.storage.blob import BlobServiceClient
-import csv
-import os
 import streamlit as st
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
+import io
+import datetime
 
-# Function to upload CSV data to Azure Blob Storage
-def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
-    # Create a BlobServiceClient object which will be used to create a container client
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-    
-    # Save DataFrame to CSV
-    df.to_csv('temp.csv', index=False)
-    
-    # Upload the created file
-    with open('temp.csv', 'rb') as data:
-        blob_client.upload_blob(data, overwrite=True)
-    
-    # Delete the temporary file
-    os.remove('temp.csv')
+# Create BlobServiceClient object
+# Please replace 'my_connection_string' with your actual connection string
+blob_service_client = BlobServiceClient.from_connection_string('my_connection_string')
 
-# Generate and pre-populate the form based on the CSV data
-def generate_form(df, row_index=0):
-    if df.empty or row_index >= len(df):
-        st.write("No data found in CSV or index out of range")
-        return
-    row_data = df.iloc[row_index]
-    with st.form("Review"):
-        
-        col1, col2 = st.columns(2)
-        FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
-        LastName = col2.text_input("LastName", value=str(row_data.get('LastName', '')))
-        Address = st.text_input("Address", value=str(row_data.get('Address', '')))
-        City, State = st.columns(2)
-        City = City.text_input("City", value=str(row_data.get('City', '')))
-        State = State.text_input("State", value=str(row_data.get('State', '')))
-        ZipCode, Phone = st.columns(2)
-        ZipCode = ZipCode.text_input("ZipCode", value=str(row_data.get('ZipCode', '')))
-        Phone = Phone.text_input("Phone", value=str(row_data.get('Phone', '')))
-        Allergy1, Allergy2 = st.columns(2)
-        Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
-        Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
+def get_latest_blob(container_name):
+    try:
+        container_client = blob_service_client.get_container_client(container_name)
+        blob_list = container_client.list_blobs()
+        latest_blob = max(blob_list, key=lambda blob: blob.last_modified)
+        return latest_blob
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
+        return None
 
-        # When the form is submitted, save the data to a new DataFrame and upload it to Blob Storage
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            new_data = {
-                'FirstName': FirstName,
-                'LastName': LastName,
-                'Address': Address,
-                'City': City,
-                'State': State,
-                'ZipCode': ZipCode,
-                'Phone': Phone,
-                'Allergy1': Allergy1,
-                'Allergy2': Allergy2
-            }
-            new_df = pd.DataFrame([new_data])
-            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'ANODABOSS.csv', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+def download_blob_data(blob):
+    try:
+        blob_client = blob_service_client.get_blob_client('data1', blob.name)
+        stream = blob_client.download_blob().readall()
+        return pd.read_csv(io.StringIO(stream.decode('utf-8')))
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
+        return None
 
-# Example usage
-def main():
-    st.title("Submit Form Data to Azure Blob Storage")
-    # Load your CSV data into a DataFrame
-    df = pd.read_csv('out1.csv')
-    generate_form(df)
+def upload_blob_data(container_name, blob_name, data):
+    try:
+        blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+        output = io.StringIO()
+        data.to_csv(output, index=False)
+        output.seek(0)
+        blob_client.upload_blob(output.read(), overwrite=True)
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
 
-if __name__ == "__main__":
-    main()
+# Review button
+with st.form("Review"):
+    latest_blob = get_latest_blob('data1')
+    if latest_blob is not None:
+        data = download_blob_data(latest_blob)
+        if data is not None:
+            row_data = data.iloc[0]  # assuming you want to display the first row
+
+            col1, col2 = st.columns(2)
+            FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
+            LastName = col2.text_input("LastName", value=str(row_data.get('LastName', '')))
+            Address = st.text_input("Address", value=str(row_data.get('Address', '')))
+            City, State = st.columns(2)
+            City = City.text_input("City", value=str(row_data.get('City', '')))
+            State = State.text_input("State", value=str(row_data.get('State', '')))
+            ZipCode, Phone = st.columns(2)
+            ZipCode = ZipCode.text_input("ZipCode", value=str(row_data.get('ZipCode', '')))
+            Phone = Phone.text_input("Phone", value=str(row_data.get('Phone', '')))
+            Allergy1, Allergy2 = st.columns(2)
+            Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
+            Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
+
+            # When the 'Submit' button is pressed, the form will be submitted
+            if st.form_submit_button('Submit'):
+                form_data = pd.DataFrame({
+                    'FirstName': [FirstName],
+                    'LastName': [LastName],
+                    'Address': [Address],
+                    'City': [City],
+                    'State': [State],
+                    'ZipCode': [ZipCode],
+                    'Phone': [Phone],
+                    'Allergy1': [Allergy1],
+                    'Allergy2': [Allergy2]
+                })
+                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                blob_name = f"ReviewedFiles/review_{timestamp}.csv"
+                upload_blob_data('data1', blob_name, form_data)
+
