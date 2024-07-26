@@ -6,41 +6,48 @@ import pandas as pd
 
 # Function to upload CSV data to Azure Blob Storage
 def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
-    # Create a BlobServiceClient object which will be used to create a container client
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-    
-    # Save DataFrame to CSV
-    df.to_csv('temp.csv', index=False)
-    
-    # Upload the created file
-    with open('temp.csv', 'rb') as data:
-        blob_client.upload_blob(data, overwrite=True)
-    
-    # Delete the temporary file
-    os.remove('temp.csv')
+    try:
+        # Create a BlobServiceClient object which will be used to create a container client
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+        
+        # Save DataFrame to CSV
+        df.to_csv('temp.csv', index=False)
+        
+        # Upload the created file
+        with open('temp.csv', 'rb') as data:
+            blob_client.upload_blob(data, overwrite=True)
+        
+        # Delete the temporary file
+        os.remove('temp.csv')
+    except Exception as e:
+        st.error(f"Error uploading CSV to blob: {e}")
 
 # Function to download the latest CSV data from Azure Blob Storage
 def download_latest_csv_from_blob(container_name, connection_string):
-    # Create a BlobServiceClient object which will be used to create a container client
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    container_client = blob_service_client.get_container_client(container_name)
-    
-    # Get the list of all blobs in the container
-    blob_list = container_client.list_blobs()
-    
-    # Find the latest blob based on the name (assuming the name includes a timestamp or some identifier that increases with each new file)
-    latest_blob_name = max(blob.name for blob in blob_list)
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=latest_blob_name)
-    
-    # Download the blob to a CSV
-    with open('latest.csv', 'wb') as csv_file:
-        csv_file.write(blob_client.download_blob().readall())
-    
-    # Load the CSV data into a DataFrame
-    df = pd.read_csv('latest.csv')
-    
-    return df
+    try:
+        # Create a BlobServiceClient object which will be used to create a container client
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        container_client = blob_service_client.get_container_client(container_name)
+        
+        # Get the list of all blobs in the container
+        blob_list = container_client.list_blobs()
+        
+        # Find the latest blob based on the name (assuming the name includes a timestamp or some identifier that increases with each new file)
+        latest_blob_name = max(blob.name for blob in blob_list)
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=latest_blob_name)
+        
+        # Download the blob to a CSV
+        with open('latest.csv', 'wb') as csv_file:
+            csv_file.write(blob_client.download_blob().readall())
+        
+        # Load the CSV data into a DataFrame
+        df = pd.read_csv('latest.csv')
+        
+        return df
+    except Exception as e:
+        st.error(f"Error downloading CSV from blob: {e}")
+        return pd.DataFrame()
 
 # Generate and pre-populate the form based on the CSV data
 def generate_form(df, row_index=0):
