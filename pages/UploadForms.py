@@ -48,7 +48,7 @@ def main(uploaded_file):
         document = result.documents[0]
 
         # Create a CSV writer
-        csv_filename = f'result_{timestamp}.csv'
+        csv_filename = f'{timestamp}.csv'
         with open(csv_filename, mode='w', newline='', encoding='utf-8') as csvfile:
             fieldnames = [name for name in document.fields.keys()]
             writer = DictWriter(csvfile, fieldnames=fieldnames)
