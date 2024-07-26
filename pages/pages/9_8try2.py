@@ -5,18 +5,23 @@ import pandas as pd
 
 # Function to upload CSV data to Azure Blob Storage
 def upload_csv_data_to_blob(df, container_name, blob_name, connection_string):
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-    
-    # Save DataFrame to CSV
-    df.to_csv('temp.csv', index=False)
-    
-    # Upload the created file
-    with open('temp.csv', 'rb') as data:
-        blob_client.upload_blob(data, overwrite=True)
-    
-    # Delete the temporary file
-    os.remove('temp.csv')
+    try:
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
+        
+        # Save DataFrame to CSV
+        df.to_csv('temp.csv', index=False)
+        
+        # Upload the created file
+        with open('temp.csv', 'rb') as data:
+            blob_client.upload_blob(data, overwrite=True)
+        
+        # Delete the temporary file
+        os.remove('temp.csv')
+        
+        st.success("File submitted successfully")
+    except Exception as e:
+        st.error(f"Error uploading CSV to blob: {e}")
 
 # Function to download the latest CSV data from Azure Blob Storage
 def download_latest_csv_from_blob(container_name, connection_string):
@@ -27,7 +32,7 @@ def download_latest_csv_from_blob(container_name, connection_string):
         # Get the list of all blobs in the container
         blob_list = container_client.list_blobs()
         
-        # Find the latest blob based on the name (assuming the name includes a timestamp or some identifier that increases with each new file)
+        # Find the latest blob based on the last modified date
         latest_blob_name = max(blob_list, key=lambda b: b.last_modified).name
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=latest_blob_name)
         
