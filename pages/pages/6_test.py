@@ -399,54 +399,51 @@ with st.form("Review"):
         PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
             # When the 'Submit' button is pressed, the form will be submitted
-                if st.form_submit_button('Submit'):
-                 form_data = pd.DataFrame ({
-                    'FirstName': [FirstName],
-                    'LastName': [LastName],
-                    'Address': [Address],
-                    'City': [City],
-                    'State': [State],
-                    'ZipCode': [ZipCode],
-                    'Phone': [Phone],
-                    'Allergy1': [Allergy1],
-                    'Allergy2': [Allergy2],
-                    'MedIntakeName':[MedIntakeName],
-                    'MedIntakeMonth':[MedIntakeMonth],
-                    'MedIntakeYear':[MedIntakeYear],
-                    'Med1Check':[Med1Check],
-                    'Med1Name':[Med1Name],
-                    'Med1Dosage':[Med1Dosage],
-                    'Med1Frequency':[Med1Frequency],
-                    'Med1Form': [Med1Form],
-                    'Med1Route': [Med1Route],
-                    'Med1Instructions': [Med1Instructions],
+        if st.form_submit_button('Submit'):
+            form_data = pd.DataFrame({
+                'FirstName': [FirstName],
+                'LastName': [LastName],
+                'Address': [Address],
+                'City': [City],
+                'State': [State],
+                'ZipCode': [ZipCode],
+                'Phone': [Phone],
+                'Allergy1': [Allergy1],
+                'Allergy2': [Allergy2],
+                'MedIntakeName': [MedIntakeName],
+                'MedIntakeMonth': [MedIntakeMonth],
+                'MedIntakeYear': [MedIntakeYear],
+                'Med1Check': [Med1Check],
+                'Med1Name': [Med1Name],
+                'Med1Dosage': [Med1Dosage],
+                'Med1Frequency': [Med1Frequency],
+                'Med1Form': [Med1Form],
+                'Med1Route': [Med1Route],
+                'Med1Instructions': [Med1Instructions],
+                'Med2Check': [Med2Check],
+                'Med2Name': [Med2Name],
+                'Med2Dosage': [Med2Dosage],
+                'Med2Frequency': [Med2Frequency],
+                'Med2Form': [Med2Form],
+                'Med2Route': [Med2Route],
+                'Med2Instructions': [Med2Instructions],
+                'Med3Check': [Med3Check],
+                'Med3Name': [Med3Name],
+                'Med3Dosage': [Med3Dosage],
+                'Med3Frequency': [Med3Frequency],
+                'Med3Form': [Med3Form],
+                'Med3Route': [Med3Route],
+                'Med3Instructions': [Med3Instructions],
+                'Med4Check': [Med4Check],
+                'Med4Name': [Med4Name],
+                'Med4Dosage': [Med4Dosage],
+                'Med4Frequency': [Med4Frequency],
+                'Med4Form': [Med4Form],
+                'Med4Route': [Med4Route],
+                'Med4Instructions': [Med4Instructions]
+             })
 
-                    'Med2Check':[Med2Check],
-                    'Med2Name':[Med2Name],
-                    'Med2Dosage':[Med2Dosage],
-                    'Med2Frequency':[Med2Frequency],
-                    'Med2Form': [Med2Form],
-                    'Med2Route': [Med2Route],
-                    'Med2Instructions': [Med2Instructions],
 
-                    'Med3Check':[Med3Check],
-                    'Med3Name':[Med3Name],
-                    'Med3Dosage':[Med3Dosage],
-                    'Med3Frequency':[Med3Frequency],
-                    'Med3Form': [Med3Form],
-                    'Med3Route': [Med3Route],
-                    'Med3Instructions': [Med3Instructions],
-
-                    'Med4Check':[Med4Check],
-                    'Med4Name':[Med4Name],
-                    'Med4Dosage':[Med4Dosage],
-                    'Med4Frequency':[Med4Frequency],
-                    'Med4Form': [Med4Form],
-                    'Med4Route': [Med4Route],
-                    'Med4Instructions': [Med4Instructions],                    
-
-                })
-
-                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                blob_name = f"ReviewedFiles/review_{timestamp}.csv"
-                upload_blob_data('data1', blob_name, form_data)
+            timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            blob_name = f"ReviewedFiles/review_{timestamp}.csv"
+            upload_blob_data('data1', blob_name, form_data)
