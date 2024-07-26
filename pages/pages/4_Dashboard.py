@@ -10,41 +10,49 @@ from datetime import datetime
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
 container_name = "data1"
 
-# Create blob service client
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+try:
+    # Create blob service client
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
-# Get blob client
-container_client = blob_service_client.get_container_client(container_name)
+    # Get blob client
+    container_client = blob_service_client.get_container_client(container_name)
 
-# Get the latest blob based on the timestamp in the filename
-blobs_list = container_client.list_blobs(name_starts_with="data1/ReviewedFiles/review_")
-blobs_list = sorted(blobs_list, key=lambda x: datetime.strptime(re.search(r'review_(.*).csv', x.name).group(1), '%Y%m%d%H%M%S'), reverse=True)
-blob_name = blobs_list[0].name
+    # Get the latest blob based on the timestamp in the filename
+    blobs_list = container_client.list_blobs(name_starts_with="ReviewedFiles/review_")
+    blobs_list = sorted(blobs_list, key=lambda x: datetime.strptime(re.search(r'review_(.*).csv', x.name).group(1), '%Y%m%d%H%M%S'), reverse=True)
+    blob_name = blobs_list[0].name
 
-blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+    blob_client = blob_service_client.get_blob_client(container_name, blob_name)
 
-# Download the blob to a stream
-stream = io.BytesIO()
-downloader = blob_client.download_blob()
-downloader.readinto(stream)
+    # Download the blob to a stream
+    stream = io.BytesIO()
+    downloader = blob_client.download_blob()
+    downloader.readinto(stream)
 
-# Convert the stream to a pandas dataframe
-stream.seek(0)
-df = pd.read_csv(stream)
 
-# Convert the range of columns from Day1Yes to Day31Yes to a single column with 31 rows
-df = df.melt(id_vars=[col for col in df.columns if not col.startswith('Day')], 
-             value_vars=[f'Day{i}Yes' for i in range(1, 32)], 
-             var_name='Day', 
-             value_name='Yes')
+    # Convert the stream to a pandas dataframe
+    stream.seek(0)
+    df = pd.read_csv(stream)
 
-# Calculate percentage where selected over total
-df['Percentage'] = df['Yes'].apply(lambda x: x / df['Yes'].sum() * 100)
+    # Display the range of columns from Day1Yes to Day31Yes in Streamlit
+    st.write(df.loc[:, 'Day1Yes':'Day31Yes'])
+    
 
-# Create a pie chart
-fig, ax = plt.subplots()
-ax.pie(df['Percentage'], labels=df['Day'], autopct='%1.1f%%')
-plt.title('Percentage of Yes by Day')
+    # Convert range of columns from Day1Yes to Day31Yes to single column 'Yes'
+    df['Yes'] = df.loc[:, 'Day1Yes':'Day31Yes'].sum(axis=1)
 
-# Display the pie chart in Streamlit
-st.pyplot(fig)
+    # Create pie chart
+    yes_count = df['Yes'].sum()
+    total_count = df.shape[0]
+    labels = ['Yes', 'No']
+    sizes = [yes_count, total_count - yes_count]
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    st.pyplot(fig1)
+
+    # Display the dataframe in Streamlit
+    st.write(df)
+
+except Exception as e:
+    st.write("An error occurred:", str(e))

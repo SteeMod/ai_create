@@ -1,58 +1,77 @@
 import streamlit as st
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
 import io
-import matplotlib.pyplot as plt
-import re
-from datetime import datetime
+import datetime
 
-# Azure blob storage details
-connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
-container_name = "data1"
+# Create BlobServiceClient object
+# Please replace 'my_connection_string' with your actual connection string
+blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 
-try:
-    # Create blob service client
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+def get_latest_blob(container_name):
+    try:
+        container_client = blob_service_client.get_container_client(container_name)
+        blob_list = container_client.list_blobs()
+        latest_blob = max(blob_list, key=lambda blob: blob.last_modified)
+        return latest_blob
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
+        return None
 
-    # Get blob client
-    container_client = blob_service_client.get_container_client(container_name)
+def download_blob_data(blob):
+    try:
+        blob_client = blob_service_client.get_blob_client('data1', blob.name)
+        stream = blob_client.download_blob().readall()
+        return pd.read_csv(io.StringIO(stream.decode('utf-8')))
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
+        return None
 
-    # Get the latest blob based on the timestamp in the filename
-    blobs_list = container_client.list_blobs(name_starts_with="ReviewedFiles/review_")
-    blobs_list = sorted(blobs_list, key=lambda x: datetime.strptime(re.search(r'review_(.*).csv', x.name).group(1), '%Y%m%d%H%M%S'), reverse=True)
-    blob_name = blobs_list[0].name
+def upload_blob_data(container_name, blob_name, data):
+    try:
+        blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+        output = io.StringIO()
+        data.to_csv(output, index=False)
+        output.seek(0)
+        blob_client.upload_blob(output.read(), overwrite=True)
+    except Exception as e:
+        st.write(f"Error occurred: {e}")
 
-    blob_client = blob_service_client.get_blob_client(container_name, blob_name)
+# Review button
+with st.form("Review"):
+    latest_blob = get_latest_blob('data1')
+    if latest_blob is not None:
+        data = download_blob_data(latest_blob)
+        if data is not None:
+            row_data = data.iloc[0]  # assuming you want to display the first row
 
-    # Download the blob to a stream
-    stream = io.BytesIO()
-    downloader = blob_client.download_blob()
-    downloader.readinto(stream)
+            col1, col2 = st.columns(2)
+            FirstName = col1.text_input("FirstName", value=str(row_data.get('FirstName', '')))
+            LastName = col2.text_input("LastName", value=str(row_data.get('LastName', '')))
+            Address = st.text_input("Address", value=str(row_data.get('Address', '')))
+            City, State = st.columns(2)
+            City = City.text_input("City", value=str(row_data.get('City', '')))
+            State = State.text_input("State", value=str(row_data.get('State', '')))
+            ZipCode, Phone = st.columns(2)
+            ZipCode = ZipCode.text_input("ZipCode", value=str(row_data.get('ZipCode', '')))
+            Phone = Phone.text_input("Phone", value=str(row_data.get('Phone', '')))
+            Allergy1, Allergy2 = st.columns(2)
+            Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
+            Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
 
-
-    # Convert the stream to a pandas dataframe
-    stream.seek(0)
-    df = pd.read_csv(stream)
-
-    # Display the range of columns from Day1Yes to Day31Yes in Streamlit
-    st.write(df.loc[:, 'Day1Yes':'Day31Yes'])
-    
-
-    # Convert range of columns from Day1Yes to Day31Yes to single column 'Yes'
-    df['Yes'] = df.loc[:, 'Day1Yes':'Day31Yes'].sum(axis=1)
-
-    # Create pie chart
-    yes_count = df['Yes'].sum()
-    total_count = df.shape[0]
-    labels = ['Yes', 'No']
-    sizes = [yes_count, total_count - yes_count]
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    st.pyplot(fig1)
-
-    # Display the dataframe in Streamlit
-    st.write(df)
-
-except Exception as e:
-    st.write("An error occurred:", str(e))
+            # When the 'Submit' button is pressed, the form will be submitted
+            if st.form_submit_button('Submit'):
+                form_data = pd.DataFrame({
+                    'FirstName': [FirstName],
+                    'LastName': [LastName],
+                    'Address': [Address],
+                    'City': [City],
+                    'State': [State],
+                    'ZipCode': [ZipCode],
+                    'Phone': [Phone],
+                    'Allergy1': [Allergy1],
+                    'Allergy2': [Allergy2]
+                })
+                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                blob_name = f"ReviewedFiles/review_{timestamp}.csv"
+                upload_blob_data('data1', blob_name, form_data)
