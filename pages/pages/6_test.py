@@ -142,12 +142,12 @@ with st.form("Review"):
 
             Day5, Day5Yes, Day5No, Day5Dosage, Day5Freq, Day5Form, Day5Route = st.columns(7)
             Day5 = Day5.text_input("Day5", value=str(row_data.get('Day5', '')))
-            Day5Yes = Day5Yes.text_input("Yes5", value=str(row_data.get('Day5Yes', '')))
-            Day5No = Day5No.text_input("No5", value=str(row_data.get('Day5No', '')))
-            Day5Dosage = Day5Dosage.text_input("Dosage5", value=str(row_data.get('Day5Dosage', '')))
-            Day5Freq = Day5Freq.text_input("Frequency5", value=str(row_data.get('Day5Freq', '')))
-            Day5Form = Day5Form.text_input("Form5", value=str(row_data.get('Day5Form', '')))
-            Day5Route = Day5Route.text_input("Route5", value=str(row_data.get('Day5Route', '')))
+            Day5Yes = Day5Yes.text_input("Yes_5", value=str(row_data.get('Day5Yes', '')))
+            Day5No = Day5No.text_input("No_5", value=str(row_data.get('Day5No', '')))
+            Day5Dosage = Day5Dosage.text_input("Dosage_5", value=str(row_data.get('Day5Dosage', '')))
+            Day5Freq = Day5Freq.text_input("Frequency_5", value=str(row_data.get('Day5Freq', '')))
+            Day5Form = Day5Form.text_input("Form_5", value=str(row_data.get('Day5Form', '')))
+            Day5Route = Day5Route.text_input("Route_5", value=str(row_data.get('Day5Route', '')))
 
             Day6, Day6Yes, Day6No, Day6Dosage, Day6Freq, Day6Form, Day6Route = st.columns(7)
             Day6 = Day6.text_input("Day6", value=str(row_data.get('Day6', '')))
@@ -685,6 +685,7 @@ with st.form("Review"):
             		'Day31Freq': [Day31Freq],
             		'Day31Form': [Day31Form],
             		'Day31Route': [Day31Route],
+
                 })
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
