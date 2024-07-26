@@ -20,7 +20,7 @@ def main(uploaded_file):
 
         # Create BlobServiceClient
         blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net")
-        container_client = blob_service_client.get_container_client("data1")
+        container_client = blob_service_client.get_container_client("data1/CookedFiles")
 
         # Generate a timestamped filename
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
