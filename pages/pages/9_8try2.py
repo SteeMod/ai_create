@@ -7,6 +7,7 @@ from datetime import datetime
 # Function to upload CSV data to Azure Blob Storage
 def upload_csv_data_to_blob(df, container_name, connection_string):
     try:
+        st.write("Starting upload_csv_data_to_blob")  # Debug statement
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         
         # Generate a timestamped blob name
@@ -31,6 +32,7 @@ def upload_csv_data_to_blob(df, container_name, connection_string):
 # Function to download the latest CSV data from Azure Blob Storage
 def download_latest_csv_from_blob(container_name, connection_string):
     try:
+        st.write("Starting download_latest_csv_from_blob")  # Debug statement
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         container_client = blob_service_client.get_container_client(container_name)
         
@@ -92,7 +94,7 @@ def generate_form(df, row_index=0):
             }
             new_df = pd.DataFrame([new_data])
             st.write(new_df)  # Debug statement to check the DataFrame
-            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+            upload_csv_data_to_blob(new_df, 'data1/ReviewedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyMDqJWDj3pG0FzJCTkCakn/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 
 # Example usage
 def main():
@@ -100,6 +102,7 @@ def main():
     
     # Add a button to review the latest CSV
     if st.button("Review"):
+        st.write("Review button clicked")  # Debug statement
         # Load the latest CSV data into a DataFrame
         df = download_latest_csv_from_blob('data1', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
         generate_form(df)
