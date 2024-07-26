@@ -8,13 +8,14 @@ from datetime import datetime
 def upload_csv_data_to_blob(df):
     try:
         st.write("Starting upload_csv_data_to_blob")  # Debug statement
-        connection_string = os.getenv('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
-        container_name = os.getenv('data1/ReviewedFiles')
+        connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
+        container_name = 'data1'
+        
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         
         # Generate a timestamped blob name
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        blob_name = f"ReviewedFiles{timestamp}.csv"
+        blob_name = f"{timestamp}.csv"
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
         
         # Save DataFrame to CSV
@@ -35,8 +36,9 @@ def upload_csv_data_to_blob(df):
 def download_latest_csv_from_blob():
     try:
         st.write("Starting download_latest_csv_from_blob")  # Debug statement
-        connection_string = os.getenv('AZURE_CONNECTION_STRING')
-        container_name = os.getenv('AZURE_CONTAINER_NAME')
+        connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
+        container_name = 'data1'
+        
         blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         container_client = blob_service_client.get_container_client(container_name)
         
@@ -110,45 +112,4 @@ def main():
         generate_form(df)
 
 if __name__ == "__main__":
-    main()  #This code review and submits 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#praise the lord
+    main()
