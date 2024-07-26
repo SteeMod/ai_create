@@ -436,7 +436,39 @@ with st.form("Review"):
                     'Med4Frequency': [Med4Frequency],
                     'Med4Form': [Med4Form],
                     'Med4Route': [Med4Route],
-                    'Med4Instructions': [Med4Instructions]
+                    'Med4Instructions': [Med4Instructions],
+
+                    'Day1': [Day1],
+                    'Day1Yes': [Day1Yes],
+                    'Day1No': [Day1No],
+                    'Day1Dosage': [Day1Dosage],
+                    'Day1Freq': [Day1Freq],
+                    'Day1Form': [Day1Form],
+                    'Day1Route': [Day1Route],
+
+                    'Day2': [Day2],
+                    'Day2Yes': [Day2Yes],
+                    'Day2No': [Day2No],
+                    'Day2Dosage': [Day2Dosage],
+                    'Day2Freq': [Day2Freq],
+                    'Day2Form': [Day2Form],
+                    'Day2Route': [Day2Route],
+
+                    'Day3': [Day3],
+                    'Day3Yes': [Day3Yes],
+                    'Day3No': [Day3No],
+                    'Day3Dosage': [Day3Dosage],
+                    'Day3Freq': [Day3Freq],
+                    'Day3Form': [Day3Form],
+                    'Day3Route': [Day3Route],
+
+                    'Day4': [Day4],
+                    'Day4Yes': [Day4Yes],
+                    'Day4No': [Day4No],
+                    'Day4Dosage': [Day4Dosage],
+                    'Day4Freq': [Day4Freq],
+                    'Day4Form': [Day4Form],
+                    'Day4Route': [Day4Route],
                 })
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
