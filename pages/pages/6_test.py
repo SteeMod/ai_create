@@ -38,7 +38,7 @@ def upload_blob_data(container_name, blob_name, data):
         st.write(f"Error occurred: {e}")
 
 # Review button
-if st.button("Review"):
+with st.form("Review"):
     latest_blob = get_latest_blob('data1')
     if latest_blob is not None:
         data = download_blob_data(latest_blob)
