@@ -92,7 +92,7 @@ def generate_form(df, row_index=0):
 def main():
     st.title("Submit Form Data to Azure Blob Storage")
     # Load your CSV data into a DataFrame
-    df = download_latest_csv_from_blob('data1/CookedFiles', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+    df = download_latest_csv_from_blob('data1', 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
     generate_form(df)
 
 if __name__ == "__main__":
