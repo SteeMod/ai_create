@@ -43,3 +43,43 @@ plt.figure(figsize=(6, 6))
 plt.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
 plt.title('Pie Chart of Selected vs Not Selected')
 st.pyplot(plt.gcf())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Praise the lord
