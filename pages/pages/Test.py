@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import streamlit as st
 
 # Load the CSV file
 df = pd.read_csv('out1.csv')
@@ -16,6 +17,9 @@ reshaped_data = np.reshape(selected_data, (-1, 2))
 
 # Convert the reshaped data back to a DataFrame
 reshaped_df = pd.DataFrame(reshaped_data)
+
+# Display the reshaped DataFrame on the Streamlit webpage
+st.dataframe(reshaped_df)
 
 # Save the reshaped DataFrame to a new CSV file
 reshaped_df.to_csv('reshaped_file.csv', index=False)
