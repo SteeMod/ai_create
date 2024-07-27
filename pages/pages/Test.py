@@ -1,12 +1,12 @@
-import csv, operator
+import pandas as pd
 import streamlit as st
+import os
 
 # Open the CSV file
-with open('out1.csv', 'r') as csvfile:
-    # Read the CSV file
-    data = csv.reader(csvfile)
-    # Sort the data by the first column (change the index to sort by a different column)
-    sorted_data = sorted(data, key=operator.itemgetter(0))  # Change 0 to the index of the column you want to sort by
-
-# Display the sorted data on a Streamlit page
-st.write(sorted_data)
+df = pd.read_csv('out1.csv')
+    
+    # Select the range 'Day1Yes' to 'Day31Yes' and transpose the DataFrame
+df = df.loc[:, 'Day1Yes':'Day31Yes'].transpose()
+    
+    # Display the transposed DataFrame
+st.dataframe(df)
