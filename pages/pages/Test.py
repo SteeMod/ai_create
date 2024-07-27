@@ -4,9 +4,9 @@ import os
 
 # Open the CSV file
 df = pd.read_csv('out1.csv')
-    
-    # Select the range 'Day1Yes' to 'Day31Yes' and transpose the DataFrame
-df = df.loc[:, 'Day5Yes':'Day31Yes'].transpose()
-    
-    # Display the transposed DataFrame
+
+# Select only columns with names containing 'Day' 'Yes' or 'Day' 'yes'
+df = df[[col for col in df.columns if 'Day' in col and ('Yes' in col or 'yes' in col)]]
+
+# Display the DataFrame
 st.dataframe(df)
