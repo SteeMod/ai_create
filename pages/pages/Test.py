@@ -1,85 +1,49 @@
 import pandas as pd
 import streamlit as st
-import os
 import matplotlib.pyplot as plt
-from azure.storage.blob import ContainerClient
+from io import BytesIO
+from azure.storage.blob import BlobServiceClient
 
-# Provide your Azure Blob Storage connection string and container name
-your_connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
-your_container_name = 'data1'
+try:
+    blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+    container_client = blob_service_client.get_container_client('data1')
 
-# Connect to the container
-container = ContainerClient.from_connection_string(conn_str=your_connection_string, container_name=your_container_name)
+    # List all blobs in the virtual folder 'ReviewedFiles'
+    blob_list = container_client.list_blobs(name_starts_with='ReviewedFiles/')
 
-# Get the name of the latest blob
-latest_blob_name = sorted([(blob.name, blob.last_modified) for blob in container.list_blobs()], key=lambda x: x[1])[-1][0]
+    # Find the latest blob
+    latest_blob = max(blob_list, key=lambda blob: blob.last_modified)
 
-# Read the latest CSV file from Azure Blob Storage
-df = pd.read_csv(f'azure://{your_container_name}/{latest_blob_name}')
+    # Download the latest blob as a pandas DataFrame
+    blob_client = blob_service_client.get_blob_client('data1', latest_blob.name)
+    df = pd.read_csv(BytesIO(blob_client.download_blob().readall()))
 
-# Select only columns with names containing 'Day' 'Yes' or 'Day' 'yes'
-df = df[[col for col in df.columns if 'Day' in col and ('Yes' in col or 'yes' in col)]]
+    # Select only columns with names containing 'Day' 'Yes' or 'Day' 'yes'
+    df = df[[col for col in df.columns if 'Day' in col and ('Yes' in col or 'yes' in col)]]
 
-# Transpose the DataFrame
-df = df.transpose()
+    # Transpose the DataFrame
+    df = df.transpose()
 
-# Sort the DataFrame by column names
-df = df.sort_index(axis=1)
+    # Sort the DataFrame by column names
+    df = df.sort_index(axis=1)
 
-# Rename the first column to 'Yes'
-df.rename(columns={df.columns[0]: 'Yes'}, inplace=True)
+    # Rename the first column to 'Yes'
+    df.rename(columns={df.columns[0]: 'Yes'}, inplace=True)
 
-# Display the DataFrame
-st.dataframe(df)
+    # Display the DataFrame
+    st.dataframe(df)
 
-# Count the rows where 'Yes' is ':selected:'
-numerator = df[df['Yes'] == ':selected:'].shape[0]
+    # Count the rows where 'Yes' is ':selected:'
+    numerator = df[df['Yes'] == ':selected:'].shape[0]
 
-# Get the total row count
-denominator = df.shape[0]
+    # Get the total row count
+    denominator = df.shape[0]
 
-# Create a pie chart
-plt.figure(figsize=(6, 6))
-plt.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
-plt.title('Pie Chart of Selected vs Not Selected')
-st.pyplot(plt.gcf())
+    # Create a pie chart
+    plt.figure(figsize=(6, 6))
+    plt.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
+    plt.title('Pie Chart of Selected vs Not Selected')
+    st.pyplot(plt.gcf())
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Praise the lord
+except Exception as ex:
+    print(f'Exception: {ex}')
