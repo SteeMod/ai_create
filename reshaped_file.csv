@@ -1,38 +1,4 @@
-0,1
-253 227 3025,DR LORRI WELLER
-WALGREENS,253 227 3025
-:unselected:,Buprenorphine
-:unselected:,Naltrexone
-:selected:,Methadone
-50mg,"1
-time(s) DAILY"
-CAPSULE,ORAL
-Take I pill daily,:unselected:
-Other:,METHADONE
-JULY,2024
-1,:selected:
-:unselected:,50mg
-"1
-time(s)|
-DAILS",FRACC
-ORAL,2
-:selected:,:unselected:
-50 mg,"time(s)
-DAILY"
-CAPSULE,ORAL
-3,:selected:
-:unselected:,50 mg
-time(s) DAILY,CAPSULE
-DRAL,4
-:selected:,:unselected:
-50mg,"1
-time(s)"
-CAPSULE,ORAL
-5,:unselected:
-:selected:,6
-:unselected:,:selected:
-time(s),7
-:selected:,:unselected:
-50mg,"1
-time(s) DAILY"
-CAPSULE,ORAL
+0,1,2
+1,:selected:,:unselected:
+2,:selected:,:unselected:
+3,:selected:,:unselected:
