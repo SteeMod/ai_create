@@ -1,25 +1,12 @@
-import pandas as pd
-import numpy as np
-import streamlit as st
+import csv, operator
 
-# Load the CSV file
-df = pd.read_csv('out1.csv')
+# Open the CSV file
+with open('out1.csv', 'r') as csvfile:
+    # Read the CSV file
+    data = csv.reader(csvfile)
+    # Sort the data by the first column (change the index to sort by a different column)
+    sorted_data = sorted(data, key=operator.itemgetter(0))  # Change 0 to the index of the column you want to sort by
 
-# Specify the labels of the values you want to select
-column_names = ['Day1', 'Day1Yes', 'Day1No', 'Day2', 'Day2Yes', 'Day2No']
-
-# Select the rows with these labels
-selected_data = df[df['column_names'].isin(column_names)]
-
-# Reshape the selected data to have three columns
-# The number of rows will be determined by the number of elements in selected_data
-reshaped_data = np.reshape(selected_data.values, (-1, 3))
-
-# Convert the reshaped data back to a DataFrame
-reshaped_df = pd.DataFrame(reshaped_data)
-
-# Save the reshaped DataFrame to a new CSV file
-reshaped_df.to_csv('reshaped_file.csv', index=False)
-
-# Display the DataFrame in Streamlit
-st.write(reshaped_df)
+# Print each row of the sorted data
+for row in sorted_data:
+    print(row)
