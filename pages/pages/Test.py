@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 # Assuming df is your DataFrame
-df = pd.read_csv('latest.csv')
+df = pd.read_csv('out1.csv')
 
 # Split the dataframe into two dataframes at the 31st to 100th and 101st to 150th column index
 df1 = df.iloc[:, 30:100]  # Python uses 0-based indexing
