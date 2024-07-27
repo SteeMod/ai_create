@@ -6,7 +6,7 @@ import os
 df = pd.read_csv('out1.csv')
     
     # Select the range 'Day1Yes' to 'Day31Yes' and transpose the DataFrame
-df = df.loc[:, 'Day1Yes':'Day31Yes'].transpose()
+df = df.loc[:, 'Day5Yes':'Day31Yes'].transpose()
     
     # Display the transposed DataFrame
 st.dataframe(df)
