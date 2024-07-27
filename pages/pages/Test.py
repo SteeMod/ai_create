@@ -1,15 +1,12 @@
 import pandas as pd
-import streamlit as st
 
 # Assuming df is your DataFrame
-df = pd.read_csv('out1.csv')
+df = pd.read_csv('latest.csv')
 
-# Split the dataframe into two dataframes at the 31st to 100th and 101st to 150th column index
-df1 = df.iloc[:, 30:100]  # Python uses 0-based indexing
-df2 = df.iloc[:, 100:150]
+# Select the row, for example, the first row
+row = df.iloc[0]
 
-# Now you can display these dataframes
-print(df1)
-print(df2)
-st.table(df1)
-st.table(df2)
+# Transpose the row
+transposed_row = pd.DataFrame(row).transpose()
+
+print(transposed_row)
