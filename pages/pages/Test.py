@@ -2,9 +2,20 @@ import pandas as pd
 import streamlit as st
 import os
 import matplotlib.pyplot as plt
+from azure.storage.blob import ContainerClient
 
-# Open the CSV file
-df = pd.read_csv('out1.csv')
+# Provide your Azure Blob Storage connection string and container name
+your_connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
+your_container_name = 'data1/ReviwedFiles'
+
+# Connect to the container
+container = ContainerClient.from_connection_string(conn_str=your_connection_string, container_name=your_container_name)
+
+# Get the name of the latest blob
+latest_blob_name = sorted([(blob.name, blob.last_modified) for blob in container.list_blobs()], key=lambda x: x[1])[-1][0]
+
+# Read the latest CSV file from Azure Blob Storage
+df = pd.read_csv(f'azure://{your_container_name}/{latest_blob_name}')
 
 # Select only columns with names containing 'Day' 'Yes' or 'Day' 'yes'
 df = df[[col for col in df.columns if 'Day' in col and ('Yes' in col or 'yes' in col)]]
