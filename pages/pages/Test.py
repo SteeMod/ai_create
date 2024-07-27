@@ -40,9 +40,9 @@ try:
     denominator = df.shape[0]
 
     # Create a pie chart
-    plt.figure(figsize=(6, 6))
+    plt.figure(figsize=(3, 3))
     plt.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
-    plt.title('Pie Chart of Selected vs Not Selected')
+    plt.title('Your  Progress')
     st.pyplot(plt.gcf())
 
 except Exception as ex:
