@@ -4,7 +4,7 @@ import pandas as pd
 df = pd.read_csv('latest.csv')
 
 # Select the row, for example, the first row
-row = df.iloc[31]
+row = df.iloc[3]
 
 # Transpose the row
 transposed_row = pd.DataFrame(row).transpose()
