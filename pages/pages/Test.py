@@ -6,7 +6,7 @@ from azure.storage.blob import ContainerClient
 
 # Provide your Azure Blob Storage connection string and container name
 your_connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
-your_container_name = 'data1/ReviwedFiles'
+your_container_name = 'data1'
 
 # Connect to the container
 container = ContainerClient.from_connection_string(conn_str=your_connection_string, container_name=your_container_name)
