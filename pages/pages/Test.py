@@ -3,13 +3,18 @@ import numpy as np
 import streamlit as st
 
 # Load the CSV file
-df = pd.read_csv('out1.csv')
+df = pd.read_csv('your_file.csv')
 
 # Convert the DataFrame to a 1D array
 data = df.values.flatten()
 
-# Select a range of values. For example, elements from index 10 to 71
-selected_data = data[10:72]
+# Specify the indices of the values you want to select
+indices = [30,31,32,
+37,38,39,
+44,45,46]
+
+# Select the values at these indices
+selected_data = data[indices]
 
 # Reshape the selected data to have two columns
 # The number of rows will be determined by the number of elements in selected_data
@@ -18,8 +23,8 @@ reshaped_data = np.reshape(selected_data, (-1, 2))
 # Convert the reshaped data back to a DataFrame
 reshaped_df = pd.DataFrame(reshaped_data)
 
-# Display the reshaped DataFrame on the Streamlit webpage
-st.dataframe(reshaped_df)
-
 # Save the reshaped DataFrame to a new CSV file
 reshaped_df.to_csv('reshaped_file.csv', index=False)
+
+# Display the DataFrame in Streamlit
+st.write(reshaped_df)
