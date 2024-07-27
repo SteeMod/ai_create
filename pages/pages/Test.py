@@ -30,6 +30,9 @@ try:
     # Rename the first column to 'Yes'
     df.rename(columns={df.columns[0]: 'Yes'}, inplace=True)
 
+    # Display the DataFrame
+    st.dataframe(df)
+
     # Count the rows where 'Yes' is ':selected:'
     numerator = df[df['Yes'] == ':selected:'].shape[0]
 
@@ -37,18 +40,10 @@ try:
     denominator = df.shape[0]
 
     # Create a pie chart
-    fig, ax = plt.subplots(figsize=(6, 6))
-    ax.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
-    ax.set_title('Your Statistics')
-
-    # Create two columns
-    col1, col2 = st.beta_columns(2)
-
-    # Display the DataFrame in the first column and the pie chart in the second column
-    with col1:
-        st.dataframe(df)
-    with col2:
-        st.pyplot(fig)
+    plt.figure(figsize=(6, 6))
+    plt.pie([numerator, denominator - numerator], labels=['Selected', 'Not Selected'], autopct='%1.1f%%')
+    plt.title('Your Statistics')
+    st.pyplot(plt.gcf())
 
 except Exception as ex:
     print(f'Exception: {ex}')
