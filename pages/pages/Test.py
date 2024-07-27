@@ -18,7 +18,7 @@ selected_data = data[indices]
 
 # Reshape the selected data to have two columns
 # The number of rows will be determined by the number of elements in selected_data
-reshaped_data = np.reshape(selected_data, (-1, 2))
+reshaped_data = np.reshape(selected_data, (-1, 3))
 
 # Convert the reshaped data back to a DataFrame
 reshaped_df = pd.DataFrame(reshaped_data)
