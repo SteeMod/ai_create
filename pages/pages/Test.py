@@ -1,12 +1,17 @@
 import pandas as pd
+import numpy as np
 
-# Assuming df is your DataFrame
-df = pd.read_csv('latest.csv')
+# Load the CSV file
+df = pd.read_csv('out1.csv')
 
-# Select the row, for example, the first row
-row = df.iloc[3]
+# Convert the DataFrame to a 1D array
+data = df.values.flatten()
 
-# Transpose the row
-transposed_row = pd.DataFrame(row).transpose()
+# Reshape the array to have 31 rows and 2 columns
+reshaped_data = np.reshape(data, (31, 2))
 
-print(transposed_row)
+# Convert the reshaped array back to a DataFrame
+reshaped_df = pd.DataFrame(reshaped_data)
+
+# Save the reshaped DataFrame to a new CSV file
+reshaped_df.to_csv('reshaped_file.csv', index=False)
