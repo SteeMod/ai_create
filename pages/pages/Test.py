@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 
 # Load the CSV file
-df = pd.read_csv('your_file.csv')
+df = pd.read_csv('out1.csv')
 
 # Convert the DataFrame to a 1D array
 data = df.values.flatten()
