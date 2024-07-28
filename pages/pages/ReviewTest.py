@@ -1,14 +1,11 @@
 import streamlit as st
 import pandas as pd
 
-# Define the initial data
-data = {'Day4': "", 'Day4Yes': "", 'Day4No': "", 'Day4Dosage': "", 'Day4Freq': "", 'Day4Form': "", 'Day4Route': ""}
+# Load the CSV data
+data = pd.read_csv('out1.csv')
 
-# Convert the dictionary to a pandas DataFrame
-df = pd.DataFrame(data, index=[0])
+# Select specific columns
+selected_columns = data[["Med1Check, Med1Name, Med1Dosage, Med1Frequency, Med1Form, Med1Route, Med1Instructions" ]]
 
-# Use the experimental data editor to make the DataFrame editable
-df = st.experimental_data_editor("Editable DataFrame", df)
-
-# Display the DataFrame
-st.table(df)
+# Display the data in a table
+st.table(selected_columns)
