@@ -5,7 +5,7 @@ import pandas as pd
 data = pd.read_csv('out1.csv')
 
 # Select specific columns
-selected_columns = data[["Med1Check", "Med1Name", "Med1Dosage", "Med1Frequency", "Med1Form", "Med1Route", "Med1Instructions"]]
+selected_columns = data[["Med3Check", "Med3Name", "Med3Dosage", "Med3Frequency", "Med3Form", "Med3Route", "Med3Instructions"]]
 
 # Display the data in a table
 st.table(selected_columns)
