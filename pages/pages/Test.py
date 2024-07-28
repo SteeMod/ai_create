@@ -6,7 +6,7 @@ column_names = ["Day1", "Day1Yes", "Day1No", "Day1Dosage", "Day1Freq", "Day1Form
 df = pd.DataFrame(columns = column_names)
 
 # Load the CSV data into the DataFrame
-data = pd.read_csv('your_file.csv')
+data = pd.read_csv('out1.csv')
 for column in column_names:
     if column in data.columns:
         df[column] = data[column]
