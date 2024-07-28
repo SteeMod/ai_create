@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
 
-# Load the CSV data
-data = pd.read_csv('out1.csv')
+# Create an empty DataFrame with 7 columns
+column_names = ["Day1", "Day1Yes", "Day1No", "Day1Dosage", "Day1Freq", "Day1Form", "Day1Route"]
+df = pd.DataFrame(columns = column_names)
 
-# Select specific columns
-selected_columns = data[["Med3Check", "Med3Name", "Med3Dosage", "Med3Frequency", "Med3Form", "Med3Route", "Med3Instructions"]]
+# Load the CSV data into the DataFrame
+data = pd.read_csv('your_file.csv')
+for column in column_names:
+    if column in data.columns:
+        df[column] = data[column]
 
 # Display the data in a table
-st.table(selected_columns)
+st.table(df)
