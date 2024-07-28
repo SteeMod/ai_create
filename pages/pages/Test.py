@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Create an empty DataFrame with 7 columns
-column_names = ["Day1", "Day1Yes", "Day1No", "Day1Dosage", "Day1Freq", "Day1Form", "Day1Route"]
+column_names = ["Day", "DayYes", "DayNo", "DayDosage", "DayFreq", "Day1Form", "Day1Route"]
 df = pd.DataFrame(columns = column_names)
 
 # Load the CSV data into the DataFrame
