@@ -7,7 +7,9 @@ from datetime import datetime
 import logging
 import os
 
-st.title("Upload")
+st.write(
+    "Upload forms"
+)
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
