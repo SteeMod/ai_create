@@ -5,6 +5,8 @@ import PyPDF2
 from PyPDF2 import PageObject
 import base64
 
+st.title("Download Medication Intake Tracker Form")
+
 # Azure blob storage details
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
 container_name = "data1"

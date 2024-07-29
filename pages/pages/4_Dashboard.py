@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 from azure.storage.blob import BlobServiceClient
 
+st.title("Medication Intake Dashboard")
+
 try:
     blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
     container_client = blob_service_client.get_container_client('data1')

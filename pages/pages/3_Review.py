@@ -4,6 +4,8 @@ import pandas as pd
 import io
 import datetime
 
+st.title("Review Form For Accuracy")
+
 # Create BlobServiceClient object
 # Please replace 'my_connection_string' with your actual connection string
 blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
