@@ -79,18 +79,13 @@ def main(uploaded_file):
             csv_blob_client.upload_blob(data, overwrite=True)
 
         logging.info(f"CSV file '{csv_filename}' uploaded successfully.")
-        return True  # Return True when the file is uploaded successfully
+
     except Exception as e:
         logging.error(f"An error occurred: {e}")
-        return False
-
-def next_page():
-    st.write("This is the next page.")
+        st.error(f"An error occurred: {e}")
 
 if __name__ == '__main__':
     uploaded_file = st.file_uploader("Choose a file", type=['pdf'])
     submit_button = st.button('Submit')
     if uploaded_file is not None and submit_button:
-        upload_successful = main(uploaded_file)
-        if upload_successful:
-            next_page()  # Load the next page
+        main(uploaded_file)
