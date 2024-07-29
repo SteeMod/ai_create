@@ -37,7 +37,7 @@ def main(uploaded_file):
         st.success(f"PDF file uploaded successfully.")
 
         # Display the link to the Review Page
-        st.markdown("Go to Review Page")
+        st.markdown("https://improved-succotash-gx4gw5xqp9fvxxp-8503.app.github.dev/")
 
         # Download the blob to a stream
         downloaded_blob = pdf_blob_client.download_blob().readall()
