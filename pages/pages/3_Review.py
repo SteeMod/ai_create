@@ -105,27 +105,27 @@ with st.form("Review"):
             Med4Instructions = Med4Instructions.text_input("Instructions4", value=str(row_data.get('Med4Instructions', '')))
  
             # Treatment Plan table
-            Day1, Day1Yes, Day1No, Day1Dosage, Day1Freq, Day1Form, Day1Route = st.columns(7)
+            Day1, Day1yes, Day1No, Day1Dosage, Day1Freq, Day1Form, Day1Route = st.columns(7)
             Day1 = Day1.text_input("Day1", value=str(row_data.get('Day1', '')))
-            Day1Yes = Day1Yes.text_input("Yes_1", value=str(row_data.get('Day1Yes', '')))
+            Day1Yes = Day1yes.text_input("Yes_1", value=str(row_data.get('Day1yes', '')))
             Day1No = Day1No.text_input("No_1", value=str(row_data.get('Day1No', '')))
             Day1Dosage = Day1Dosage.text_input("Dosage_1", value=str(row_data.get('Day1Dosage', '')))
             Day1Freq = Day1Freq.text_input("Frequency_1", value=str(row_data.get('Day1Freq', '')))
             Day1Form = Day1Form.text_input("Form_1", value=str(row_data.get('Day1Form', '')))
             Day1Route = Day1Route.text_input("Route_1", value=str(row_data.get('Day1Route', '')))
 
-            Day2, Day2Yes, Day2No, Day2Dosage, Day2Freq, Day2Form, Day2Route = st.columns(7)
+            Day2, Day2yes, Day2No, Day2Dosage, Day2Freq, Day2Form, Day2Route = st.columns(7)
             Day2 = Day2.text_input("Day2", value=str(row_data.get('Day2', '')))
-            Day2Yes = Day2Yes.text_input("Yes_2", value=str(row_data.get('Day2Yes', '')))
+            Day2yes = Day2yes.text_input("Yes_2", value=str(row_data.get('Day2yes', '')))
             Day2No = Day2No.text_input("No_2", value=str(row_data.get('Day2No', '')))
             Day2Dosage = Day2Dosage.text_input("Dosage_2", value=str(row_data.get('Day2Dosage', '')))
             Day2Freq = Day2Freq.text_input("Frequency_2", value=str(row_data.get('Day2Freq', '')))
             Day2Form = Day2Form.text_input("Form_2", value=str(row_data.get('Day2Form', '')))
             Day2Route = Day2Route.text_input("Route_2", value=str(row_data.get('Day2Route', '')))
 
-            Day3, Day3Yes, Day3No, Day3Dosage, Day3Freq, Day3Form, Day3Route = st.columns(7)
+            Day3, Day3yes, Day3No, Day3Dosage, Day3Freq, Day3Form, Day3Route = st.columns(7)
             Day3 = Day3.text_input("Day3", value=str(row_data.get('Day3', '')), key="Day3")
-            Day3Yes = Day3Yes.text_input("Yes_3", value=str(row_data.get('Day3Yes', '')), key="Day3Yes")
+            Day3yes = Day3yes.text_input("Yes_3", value=str(row_data.get('Day3yes', '')), key="Day3yes")
             Day3No = Day3No.text_input("No_3", value=str(row_data.get('Day3No', '')), key="Day3No")
             Day3Dosage = Day3Dosage.text_input("Dosage_3", value=str(row_data.get('Day3Dosage', '')), key="Day3Dosage")
             Day3Freq = Day3Freq.text_input("Frequency_3", value=str(row_data.get('Day3Freq', '')), key="Day3Freq")
@@ -133,9 +133,9 @@ with st.form("Review"):
             Day3Route = Day3Route.text_input("Route_3", value=str(row_data.get('Day3Route', '')), key="Day3Route")
 
         
-            Day4, Day4Yes, Day4No, Day4Dosage, Day4Freq, Day4Form, Day4Route = st.columns(7)
+            Day4, Day4yes, Day4No, Day4Dosage, Day4Freq, Day4Form, Day4Route = st.columns(7)
             Day4 = Day4.text_input("Day4", value=str(row_data.get('Day4', '')))
-            Day4Yes = Day4Yes.text_input("Yes_4", value=str(row_data.get('Day4Yes', '')))
+            Day4Yes = Day4yes.text_input("Yes_4", value=str(row_data.get('Day4yes', '')))
             Day4No = Day4No.text_input("No_4", value=str(row_data.get('Day4No', '')))
             Day4Dosage = Day4Dosage.text_input("Dosage_4", value=str(row_data.get('Day4Dosage', '')))
             Day4Freq = Day4Freq.text_input("Frequency_4", value=str(row_data.get('Day4Freq', '')))
@@ -441,7 +441,7 @@ with st.form("Review"):
                     'Med4Instructions': [Med4Instructions],
 
                     'Day1': [Day1],
-                    'Day1Yes': [Day1Yes],
+                    'Day1Yes': [Day1yes],
                     'Day1No': [Day1No],
                     'Day1Dosage': [Day1Dosage],
                     'Day1Freq': [Day1Freq],
@@ -449,7 +449,7 @@ with st.form("Review"):
                     'Day1Route': [Day1Route],
 
                     'Day2': [Day2],
-                    'Day2Yes': [Day2Yes],
+                    'Day2Yes': [Day2yes],
                     'Day2No': [Day2No],
                     'Day2Dosage': [Day2Dosage],
                     'Day2Freq': [Day2Freq],
@@ -457,7 +457,7 @@ with st.form("Review"):
                     'Day2Route': [Day2Route],
 
                     'Day3': [Day3],
-                    'Day3Yes': [Day3Yes],
+                    'Day3Yes': [Day3yes],
                     'Day3No': [Day3No],
                     'Day3Dosage': [Day3Dosage],
                     'Day3Freq': [Day3Freq],
@@ -465,7 +465,7 @@ with st.form("Review"):
                     'Day3Route': [Day3Route],
 
                     'Day4': [Day4],
-                    'Day4Yes': [Day4Yes],
+                    'Day4Yes': [Day4yes],
                     'Day4No': [Day4No],
                     'Day4Dosage': [Day4Dosage],
                     'Day4Freq': [Day4Freq],

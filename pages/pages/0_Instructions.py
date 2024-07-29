@@ -1,5 +1,10 @@
 import streamlit as st
 
 st.title("Instructions")
-st.subheader("Step 1")
-st.write ("At Re[Fresh], we are dedicated to providing exceptional addiction treatment services in a welcoming and inclusive environment. Our team of experienced professionals is committed to helping individuals overcome addiction and achieve long-term. We believe in creating a stigma-free and stereotype-free space where everyone feels comfortable seeking the help they need. Contact us today to learn more about our personalized treatment and start your journey towards a healthier, happier life.")
+st.header("Follow exact instructions without skipping any otherwise you may recieve innacuracy.")
+st.subheader("Step 1.")
+st.write ("Welcome to ReFresh, this is how the system works. First you go to the download page and either download or print the form you select.")
+st.subheader("Step 2.")
+st.write("Now that you have an editable copy of the form  you should fill the form following these guidelines 1. This is a test so do not use any real information use pseudo information to fill the form.")
+st.subheader("Step 3.")
+st.write("After filling the form, Go to the upload page and select your filled form and click submit. If there are no error messages that means it worked")
