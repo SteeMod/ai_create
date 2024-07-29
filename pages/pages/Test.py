@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 import os
 
-st.title(Upload)
+st.title("Upload")
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
