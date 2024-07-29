@@ -80,7 +80,7 @@ def main(uploaded_file):
 
         logging.info(f"CSV file '{csv_filename}' uploaded successfully.")
         st.success(f"PDF file uploaded successfully.")
-        st.write(f"Go to the Review Page"
+        st.write("PDF file uploaded successfully.")
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         st.error(f"An error occurred: {e}")
