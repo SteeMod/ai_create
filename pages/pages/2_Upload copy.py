@@ -34,10 +34,6 @@ def main(uploaded_file):
         # Upload the PDF to Azure Blob Storage
         pdf_blob_client.upload_blob(uploaded_file, overwrite=True)
         logging.info(f"PDF file '{timestamped_blob_name}' uploaded successfully.")
-        st.success(f"PDF file uploaded successfully.")
-
-        # Display the link to the Review Page
-        st.markdown("Go to Review Page")
 
         # Download the blob to a stream
         downloaded_blob = pdf_blob_client.download_blob().readall()
