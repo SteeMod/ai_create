@@ -22,7 +22,8 @@ rating = st.selectbox("Rate us", list(range(1, 6)))
 # Create a button to submit the comment and rating
 if st.button("Submit"):
     # Append the comment and rating to the dataframe
-    df = df.append({"Comment": comment, "Rating": rating}, ignore_index=True)
+   df = pd.DataFrame(columns=["Comment", "Rating"])
+
     
     # Clear the input fields after submission
     st.empty()
