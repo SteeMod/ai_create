@@ -28,4 +28,4 @@ col1.write(
 
 # Use the second column for the image
 image = show_image()
-col2.image(image, caption='Your Image Caption', width=300)  # Adjust width as needed
+col2.image(image, caption='Stephen Modimakwane', width=200)  # Adjust width as needed
