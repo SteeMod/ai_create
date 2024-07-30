@@ -1,16 +1,7 @@
 import streamlit as st
-import streamlit as st
-from PIL import Image
-import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from PIL import Image
 import io
-st.title("About[Me]")
-st.write(
-    "Stephen Modimakwane is a  Management Information Systems Specialist with over 18 years of experience in the field. I focus on Data Analytics, Data Visualization, and AI Infusion. I have a passion for creating data-driven solutions that help organizations."
-)
-
-
 
 def show_image():
     try:
@@ -20,11 +11,21 @@ def show_image():
         blob_data = blob_client.download_blob().readall()
         image_data = Image.open(io.BytesIO(blob_data))
 
-        st.image(image_data, caption='Your Image Caption', use_column_width=True)
+        return image_data
 
     except Exception as ex:
         print('Exception:')
         print(ex)
 
-show_image()
+# Create two columns
+col1, col2 = st.beta_columns(2)
 
+# Use the first column for text
+col1.title("About[Me]")
+col1.write(
+    "Stephen Modimakwane is a  Management Information Systems Specialist with over 18 years of experience in the field. I focus on Data Analytics, Data Visualization, and AI Infusion. I have a passion for creating data-driven solutions that help organizations."
+)
+
+# Use the second column for the image
+image = show_image()
+col2.image(image, caption='Your Image Caption', width=300)  # Adjust width as needed
