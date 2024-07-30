@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
@@ -18,8 +17,10 @@ def append_blob(blob_service_client, container_name, blob_name, content):
     blob_client.upload_blob(updated_data, overwrite=True)
 
 def main():
-    connection_string = os.getenv("DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net")
-    container_name = os.getenv("data1")
+    # Access secrets from st.secrets
+    connection_string = st.secrets["DEFAULT"]["connection_string"]
+    container_name = st.secrets["DEFAULT"]["container_name"]
+
     blob_name = "comment.csv"
     
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
