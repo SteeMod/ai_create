@@ -8,7 +8,7 @@ st.write(
 
 
 # Open an image file
-image = Image.open('photo.png')
+image = Image.open('1.jpeg')
 
 # Display the image
 st.image(image, caption='Your Image')
