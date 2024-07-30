@@ -1,31 +1,14 @@
 import streamlit as st
-import pandas as pd
 
-# Create a dataframe to store comments and ratings
-# This should ideally be replaced with a persistent storage
-df = pd.DataFrame(columns=["Comment", "Rating"])
+# This will hold the comments. In a real-world application, consider using a database.
+comments = []
 
-# Display existing comments and ratings
-if not df.empty:
-    st.markdown("## Comments and Ratings")
-    for index, row in df.iterrows():
-        st.markdown(f"**Comment:** {row['Comment']}")
-        st.markdown(f"**Rating:** {'⭐' * int(row['Rating'])}")
-        st.markdown("---")
+st.title('Comment Section')
 
-# Create a text input for the comment
-comment = st.text_input("Enter your comment")
+new_comment = st.text_input('Write a comment')
+if new_comment:
+    comments.append(new_comment)  # Add the new comment to the list of comments
 
-# Create a selectbox for the rating
-rating = st.selectbox("Rate us", list(range(1, 6)))
-
-# Create a button to submit the comment and rating
-if st.button("Submit"):
-    # Append the comment and rating to the dataframe
-   df = pd.DataFrame(columns=["Comment", "Rating"])
-
-    
-    # Clear the input fields after submission
-st.empty()
-
-#praise the lord
+# Display comments in reverse order
+for comment in reversed(comments):
+    st.markdown(f'---\n**{comment}**')
