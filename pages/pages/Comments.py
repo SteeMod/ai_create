@@ -12,3 +12,5 @@ if new_comment:
 # Display comments in reverse order
 for comment in reversed(comments):
     st.markdown(f'---\n**{comment}**')
+
+st.subheader("Contact Us")

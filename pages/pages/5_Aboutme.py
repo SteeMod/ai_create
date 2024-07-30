@@ -29,3 +29,5 @@ col1.write(
 # Use the second column for the image
 image = show_image()
 col2.image(image, caption='Stephen Modimakwane', width=200)  # Adjust width as needed
+
+st.subheader("Skills& Education")
