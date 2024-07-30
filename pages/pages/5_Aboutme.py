@@ -7,8 +7,11 @@ st.write(
 )
 
 
-# Open an image file
-image = Image.open('1.jpeg')
+import streamlit as st
+from PIL import Image
+
+# Load the image
+image = Image.open('/workspaces/ai_create/photo.jpg.jpg')
 
 # Display the image
-st.image(image, caption='Your Image')
+st.image(image, caption='Your Image Caption', use_column_width=True)
