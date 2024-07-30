@@ -687,6 +687,11 @@ with st.form("Review"):
             		'Day31Freq': [Day31Freq],
             		'Day31Form': [Day31Form],
             		'Day31Route': [Day31Route],
+                    'OTPName': [OTPName],
+                    'OTPAdress': [OTPphone],
+                    'OTPClinician' : [OTPClinician],
+                    'PharmacyName' : [PharmacyName],
+                    'PharmacyPhone' : [PharmacyPhone],
 
                 })
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
