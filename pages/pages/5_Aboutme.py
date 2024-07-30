@@ -18,7 +18,7 @@ def show_image():
         print(ex)
 
 # Create two columns
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 
 # Use the first column for text
 col1.title("About[Me]")
