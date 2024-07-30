@@ -19,7 +19,7 @@ def append_blob(blob_service_client, container_name, blob_name, content):
 def main():
     # Access secrets from st.secrets
     connection_string = st.secrets["DEFAULT"]["connection_string"]
-    container_name = st.secrets["DEFAULT"]["container_name"]
+    container_name = st.secrets["DEFAULT"]["azure_container_name"]
 
     blob_name = "comment.csv"
     
