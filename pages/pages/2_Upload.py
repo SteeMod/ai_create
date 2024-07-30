@@ -14,14 +14,15 @@ logging.basicConfig(level=logging.INFO)
 
 def main(uploaded_file):
     try:
-        endpoint = "https://new2two.cognitiveservices.azure.com/"
-        credential = AzureKeyCredential("027ad9245a594c5886cf5d90abecb9d1")
+        # Retrieve environment variables
+        endpoint = os.getenv("AZURE_FORM_RECOGNIZER_ENDPOINT")
+        credential = AzureKeyCredential(os.getenv("AZURE_FORM_RECOGNIZER_KEY"))
         client = DocumentAnalysisClient(endpoint, credential)
 
         model_id = "Thessa5vs6"
 
         # Create BlobServiceClient
-        blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net")
+        blob_service_client = BlobServiceClient.from_connection_string(os.getenv("AZURE_STORAGE_CONNECTION_STRING"))
         container_client = blob_service_client.get_container_client("data1")
 
         # Generate a timestamped filename
