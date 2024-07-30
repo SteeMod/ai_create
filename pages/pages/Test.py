@@ -1,9 +1,9 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
 
-# Retrieve secrets from the secrets.toml file
-connection_string = st.secrets["DEFAULT"]["connection_string"]
-container_name = st.secrets["DEFAULT"]["azure_container_name"]
+# Use hardcoded connection string and container name
+connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
+container_name = "data1"
 blob_name = "comments.txt"
 
 # Create a form with a text input in Streamlit
