@@ -1,15 +1,6 @@
 import os
 import streamlit as st
-import smtplib
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
-
-def send_email(user_message):
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(os.getenv("stephenmodimakwane@gmail.com"), os.getenv("Gmail_2023"))
-    message = 'Subject: {}\n\n{}'.format("Webpage Message", user_message)
-    server.sendmail(os.getenv("EMAIL"), os.getenv("EMAIL"), message)
-    server.quit()
 
 def append_blob(blob_service_client, container_name, blob_name, content):
     blob_client = blob_service_client.get_blob_client(container_name, blob_name)
@@ -38,7 +29,6 @@ def main():
     
     if st.button("Send Message"):
         append_blob(blob_service_client, container_name, blob_name, user_input)
-        send_email(user_input)
         st.success("Message sent successfully!")
 
 if __name__ == "__main__":
