@@ -6,9 +6,9 @@ connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;Accou
 container_name = "data1"
 blob_name = "comments.txt"
 
-# Create a form with a text input in Streamlit
+# Create a form with a text area in Streamlit
 with st.form(key='my_form'):
-    text_input = st.text_input(label='Enter your comment')
+    text_input = st.text_area(label='Enter your comment')
     submit_button = st.form_submit_button(label='Submit')
 
     # If the form is submitted, write the comment to a file
