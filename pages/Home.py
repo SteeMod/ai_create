@@ -5,7 +5,7 @@ import streamlit as st
 st.title("Instructions")
 st.header("Follow exact instructions")
 st.subheader("Step 1.")
-st.write ("First go to the download page and either download or print the form you select. Completed sample forms are provided to make testing quicker (download and upload), however, you can print the form and fill it out." This is a test so do not use any real information use pseudo information to fill the form.)
+st.write("First go to the download page and either download or print the form you select. Completed sample forms are provided to make testing quicker (download and upload), however, you can print the form and fill it out This is a test so do not use any real information use pseudo information to fill the form.")
 st.subheader("Step 2.")
 st.write("After filling the form, Go to the upload page and select your filled form and click submit. If there are no error messages that means it has been uploaded move on to the review page")
 st.subheader("Step 3.")
