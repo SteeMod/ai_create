@@ -7,10 +7,9 @@ container_name = "data1"
 blob_name = "comments.txt"
 
 # Create a form with a text area in Streamlit
-st.subheader("Instructions")
-st.write("Include who the message is from and give detailed comments.")
+
 with st.form(key='Comment'):
-    text_input = st.text_area(label='Enter your comment')
+    text_input = st.text_area(label='Enter your comment', value='', placeholder='Include who the message is from and give detailed comments')
     submit_button = st.form_submit_button(label='Submit')
 
     # If the form is submitted, write the comment to a file
@@ -29,5 +28,3 @@ with st.form(key='Comment'):
             st.success("Comment uploaded successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
-
-        
