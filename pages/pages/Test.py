@@ -403,7 +403,7 @@ with st.form("Review"):
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
-if st.form_submit_button('Submit'):
+            if st.form_submit_button('Submit'):
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
                     'LastName': [LastName],
