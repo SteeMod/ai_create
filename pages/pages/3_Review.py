@@ -3,12 +3,18 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
 import io
 import datetime
+import os
 
 st.title("Review Form For Accuracy")
 
+# # Retrieve Azure blob storage connection string from environment variable
+connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+if not connection_string:
+    st.error("Azure Storage connection string is not set in environment variables.")
+    st.stop()
+
 # Create BlobServiceClient object
-# Please replace 'my_connection_string' with your actual connection string
-blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
 def get_latest_blob(container_name):
     try:
@@ -38,6 +44,7 @@ def upload_blob_data(container_name, blob_name, data):
         blob_client.upload_blob(output.read(), overwrite=True)
     except Exception as e:
         st.write(f"Error occurred: {e}")
+
 
 # Review button
 with st.form("Review"):
