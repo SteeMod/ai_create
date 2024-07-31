@@ -1,4 +1,4 @@
-reviw code import streamlit as st
+import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
 import io
