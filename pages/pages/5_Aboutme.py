@@ -38,7 +38,7 @@ image = show_image()
 if image:
     col2.image(image, caption='Stephen Modimakwane', width=200)  # Adjust width as needed
 
-st.subheader("Skills & Education")
+# st.subheader("Skills & Education")
 
 # Steps to Set Environment Variables
 # Windows:
