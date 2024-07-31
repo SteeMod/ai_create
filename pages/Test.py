@@ -1,20 +1,14 @@
-import streamlit as st
+reviw code import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
 import io
 import datetime
-import os
 
 st.title("Review Form For Accuracy")
 
-# # Retrieve Azure blob storage connection string from environment variable
-connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-if not connection_string:
-    st.error("Azure Storage connection string is not set in environment variables.")
-    st.stop()
-
 # Create BlobServiceClient object
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+# Please replace 'my_connection_string' with your actual connection string
+blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 
 def get_latest_blob(container_name):
     try:
@@ -44,7 +38,6 @@ def upload_blob_data(container_name, blob_name, data):
         blob_client.upload_blob(output.read(), overwrite=True)
     except Exception as e:
         st.write(f"Error occurred: {e}")
-
 
 # Review button
 with st.form("Review"):
@@ -403,6 +396,7 @@ with st.form("Review"):
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
+            # When the 'Submit' button is pressed, the form will be submitted
             if st.form_submit_button('Submit'):
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
