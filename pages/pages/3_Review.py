@@ -3,18 +3,12 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
 import io
 import datetime
-import os
 
 st.title("Review Form For Accuracy")
 
-# # Retrieve Azure blob storage connection string from environment variable
-connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-if not connection_string:
-    st.error("Azure Storage connection string is not set in environment variables.")
-    st.stop()
-
 # Create BlobServiceClient object
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+# Please replace 'my_connection_string' with your actual connection string
+blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
 
 def get_latest_blob(container_name):
     try:
@@ -45,7 +39,6 @@ def upload_blob_data(container_name, blob_name, data):
     except Exception as e:
         st.write(f"Error occurred: {e}")
 
-
 # Review button
 with st.form("Review"):
     latest_blob = get_latest_blob('data1')
@@ -67,7 +60,7 @@ with st.form("Review"):
             Allergy1, Allergy2 = st.columns(2)
             Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
             Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
-            
+
             # Medication details section
             MedIntakeName, MedIntakeMonth, MedIntakeYear = st.columns(3)
             MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data.get('MedIntakeName', '')))
@@ -110,7 +103,7 @@ with st.form("Review"):
             Med4Form = Med4Form.text_input("Form4", value=str(row_data.get('Med4Form', '')))
             Med4Route = Med4Route.text_input("Route4", value=str(row_data.get('Med4Route', '')))
             Med4Instructions = Med4Instructions.text_input("Instructions4", value=str(row_data.get('Med4Instructions', '')))
- 
+
             # Treatment Plan table
             Day1, Day1yes, Day1No, Day1Dosage, Day1Freq, Day1Form, Day1Route = st.columns(7)
             Day1 = Day1.text_input("Day1", value=str(row_data.get('Day1', '')))
@@ -139,7 +132,7 @@ with st.form("Review"):
             Day3Form = Day3Form.text_input("Form_3", value=str(row_data.get('Day3Form', '')), key="Day3Form")
             Day3Route = Day3Route.text_input("Route_3", value=str(row_data.get('Day3Route', '')), key="Day3Route")
 
-        
+
             Day4, Day4yes, Day4No, Day4Dosage, Day4Freq, Day4Form, Day4Route = st.columns(7)
             Day4 = Day4.text_input("Day4", value=str(row_data.get('Day4', '')))
             Day4yes = Day4yes.text_input("yes_4", value=str(row_data.get('Day4yes', '')))
@@ -274,7 +267,7 @@ with st.form("Review"):
             Day18Freq = Day18Freq.text_input("Frequency18", value=str(row_data.get('Day18Freq', '')))
             Day18Form = Day18Form.text_input("Form18", value=str(row_data.get('Day18Form', '')))
             Day18Route = Day18Route.text_input("Route18", value=str(row_data.get('Day18Route', '')))
-            
+
             Day19, Day19Yes, Day19No, Day19Dosage, Day19Freq, Day19Form, Day19Route = st.columns(7)
             Day19 = Day19.text_input("Day19", value=str(row_data.get('Day19', '')))
             Day19Yes = Day19Yes.text_input("Yes19", value=str(row_data.get('Day19Yes', '')))
@@ -403,6 +396,7 @@ with st.form("Review"):
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
+            # When the 'Submit' button is pressed, the form will be submitted
             if st.form_submit_button('Submit'):
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],

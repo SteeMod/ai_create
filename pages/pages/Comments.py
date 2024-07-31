@@ -1,12 +1,8 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
-import os
 
-# Retrieve Azure blob storage connection string from environment variable
-connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-if not connection_string:
-    st.error("Azure Storage connection string is not set in environment variables.")
-    st.stop()
+# Hardcoded Azure blob storage connection string
+connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
 
 container_name = "data1"
 blob_name = "comments.txt"
@@ -34,11 +30,3 @@ with st.form(key='Comment'):
             st.success("Comment uploaded successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
-
-# Steps to Set Environment Variables
-# Windows:
-# Open Command Prompt and run:
-# setx AZURE_STORAGE_CONNECTION_STRING "your_connection_string_here"
-# macOS/Linux:
-# Open Terminal and run:
-# export AZURE_STORAGE_CONNECTION_STRING="your_connection_string_here"
