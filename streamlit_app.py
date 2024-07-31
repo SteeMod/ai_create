@@ -1,4 +1,4 @@
 import streamlit as st
 
-st.title("My Streamlit App")
+st.title("Medication Tracker")
 st.write("Hello, world!")
