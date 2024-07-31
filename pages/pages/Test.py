@@ -47,3 +47,4 @@ st.subheader("Skills & Education")
 # macOS/Linux:
 # Open Terminal and run:
 # export AZURE_STORAGE_CONNECTION_STRING="your_connection_string_here"
+#PRAISEEEEEEE THE LORD
