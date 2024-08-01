@@ -65,10 +65,6 @@ try:
                 mime="application/pdf"
             )
 
-            # Display the PDF inline using an iframe
-            pdf_display = f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>'
-            components.html(pdf_display, height=800)
-        else:
-            st.error("Failed to retrieve the file content.")
+            
 except Exception as e:
     st.error(f"An error occurred: {e}")
