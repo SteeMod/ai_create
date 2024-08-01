@@ -46,24 +46,13 @@ try:
     if selected_file:
         file_content = get_file_content(selected_file)
 
-        if file_content:
-            # Debugging: Check the size of the file content
-            st.write(f"File size: {len(file_content.getvalue())} bytes")
-            st.write(file_content.getvalue()[:100])  # Display first 100 bytes of the file content
+        # Provide a download button for the PDF file
+        st.download_button(
+            label="Download PDF",
+            data=file_content,
+            file_name=selected_file,
+            mime="application/pdf"
+        )
 
-            # Convert the BytesIO object to base64 encoded string
-            b64 = base64.b64encode(file_content.getvalue()).decode()
-
-           
-
-            # Provide a download button for the PDF file
-            st.download_button(
-                label="Download PDF",
-                data=file_content,
-                file_name=selected_file,
-                mime="application/pdf"
-            )
-
-            
 except Exception as e:
     st.error(f"An error occurred: {e}")
