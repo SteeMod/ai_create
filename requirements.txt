@@ -4,3 +4,4 @@ matplotlib
 azure-ai-formrecognizer
 azure-core
 PyPDF2
+base64
