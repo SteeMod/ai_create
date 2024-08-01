@@ -55,6 +55,14 @@ try:
             # Debugging: Check the first 100 characters of the base64 string
             st.write(f"Base64 string (first 100 chars): {b64[:100]}")
 
+            # Provide a download button for the PDF file
+            st.download_button(
+                label="Download PDF",
+                data=file_content,
+                file_name=selected_file,
+                mime="application/pdf"
+            )
+
             # Display the selected file content
             st.text("Displaying the selected file:")
             st.markdown(f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>', unsafe_allow_html=True)
