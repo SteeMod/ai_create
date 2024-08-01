@@ -5,14 +5,15 @@ import base64
 
 st.title("Download Medication Intake Tracker Form")
 
-# Azure blob storage details
+# Hardcoded Azure blob storage connection string
 connection_string = "DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net"
+
 container_name = "data1"
 
-try:
-    # Create the BlobServiceClient object
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+# Create the BlobServiceClient object
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
+try:
     # Get a list of blobs in the container
     blob_list = blob_service_client.get_container_client(container_name).list_blobs()
 
@@ -29,44 +30,23 @@ try:
 
     # Function to get file content given file name
     def get_file_content(file_name):
-        try:
-            blob_client = blob_service_client.get_blob_client(container_name, file_name)
-            download_stream = blob_client.download_blob().readall()
+        blob_client = blob_service_client.get_blob_client(container_name, file_name)
+        download_stream = blob_client.download_blob().readall()
 
-            # Create a BytesIO object
-            pdf_data = io.BytesIO(download_stream)
+        # Create a BytesIO object
+        pdf_data = io.BytesIO(download_stream)
 
-            return pdf_data
-        except Exception as e:
-            st.error(f"Error retrieving file content: {e}")
-            return None
+        return pdf_data
 
     # Get the content of the selected file
-    if selected_file:
-        file_content = get_file_content(selected_file)
+    file_content = get_file_content(selected_file)
 
-        if file_content:
-            # Debugging: Check the size of the file content
-            st.write(f"File size: {len(file_content.getvalue())} bytes")
+    # Convert the BytesIO object to base64 encoded string
+    b64 = base64.b64encode(file_content.getvalue()).decode()
 
-            # Convert the BytesIO object to base64 encoded string
-            b64 = base64.b64encode(file_content.getvalue()).decode()
+    # Display the selected file content
+    st.text("Displaying the selected file:")
+    st.markdown(f'<embed src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf">', unsafe_allow_html=True)
 
-            # Debugging: Check the first 100 characters of the base64 string
-            st.write(f"Base64 string (first 100 chars): {b64[:100]}")
-
-            # Provide a download button for the PDF file
-            st.download_button(
-                label="Download PDF",
-                data=file_content,
-                file_name=selected_file,
-                mime="application/pdf"
-            )
-
-            # Display the selected file content
-            st.text("Displaying the selected file:")
-            st.markdown(f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>', unsafe_allow_html=True)
-        else:
-            st.error("Failed to retrieve the file content.")
 except Exception as e:
     st.error(f"An error occurred: {e}")
