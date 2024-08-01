@@ -63,9 +63,9 @@ try:
                 mime="application/pdf"
             )
 
-            # Display the selected file content
-            st.text("Displaying the selected file:")
-            st.markdown(f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>', unsafe_allow_html=True)
+            # Display the PDF inline using an iframe
+            pdf_display = f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>'
+            st.markdown(pdf_display, unsafe_allow_html=True)
         else:
             st.error("Failed to retrieve the file content.")
 except Exception as e:
