@@ -63,8 +63,8 @@ try:
                 mime="application/pdf"
             )
 
-            # Display the PDF inline using an iframe
-            pdf_display = f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf"></iframe>'
+            # Provide a link to view the PDF in a new tab
+            pdf_display = f'<a href="data:application/pdf;base64,{b64}" target="_blank">View PDF</a>'
             st.markdown(pdf_display, unsafe_allow_html=True)
         else:
             st.error("Failed to retrieve the file content.")
