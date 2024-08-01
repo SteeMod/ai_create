@@ -54,8 +54,7 @@ try:
             # Convert the BytesIO object to base64 encoded string
             b64 = base64.b64encode(file_content.getvalue()).decode()
 
-            # Debugging: Check the first 100 characters of the base64 string
-            st.write(f"Base64 string (first 100 chars): {b64[:100]}")
+           
 
             # Provide a download button for the PDF file
             st.download_button(
