@@ -398,8 +398,8 @@ with st.form("Review"):
 
             # When the 'Submit' button is pressed, the form will be submitted
             submit_button = st.form_submit_button('Submit')
-
-            if submit_button:
+    if submit_button:
+          
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
                     'LastName': [LastName],
