@@ -6,9 +6,9 @@ import datetime
 
 st.title("Review Form For Accuracy")
 
-# Create BlobServiceClient object
-# Please replace 'my_connection_string' with your actual connection string
-blob_service_client = BlobServiceClient.from_connection_string('DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net')
+# Create BlobServiceClient object with hardcoded connection string
+connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
 def get_latest_blob(container_name):
     try:
@@ -24,7 +24,7 @@ def download_blob_data(blob):
     try:
         blob_client = blob_service_client.get_blob_client('data1', blob.name)
         stream = blob_client.download_blob().readall()
-        return pd.read_csv(io.StringIO(stream.decode('utf-8')))
+        return pd.read_csv(io.StringIO(stream.decode('utf-8', errors='ignore')), on_bad_lines='skip')
     except Exception as e:
         st.write(f"Error occurred: {e}")
         return None
@@ -42,9 +42,9 @@ def upload_blob_data(container_name, blob_name, data):
 # Review button
 with st.form("Review"):
     latest_blob = get_latest_blob('data1')
-    if latest_blob is not None:
+    if (latest_blob is not None):
         data = download_blob_data(latest_blob)
-        if data is not None:
+        if (data is not None):
             row_data = data.iloc[0]  # assuming you want to display the first row
 
             col1, col2 = st.columns(2)
@@ -60,7 +60,7 @@ with st.form("Review"):
             Allergy1, Allergy2 = st.columns(2)
             Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
             Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
-            
+
             # Medication details section
             MedIntakeName, MedIntakeMonth, MedIntakeYear = st.columns(3)
             MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data.get('MedIntakeName', '')))
@@ -396,8 +396,8 @@ with st.form("Review"):
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
-            # When the 'Submit' button is pressed, the form will be submitted
-            if st.form_submit_button('Submit'):
+            submit_button = st.form_submit_button('Submit')
+            if submit_button:
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
                     'LastName': [LastName],
@@ -687,11 +687,9 @@ with st.form("Review"):
             		'Day31Freq': [Day31Freq],
             		'Day31Form': [Day31Form],
             		'Day31Route': [Day31Route],
-
                 })
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
                 upload_blob_data('data1', blob_name, form_data)
 
-
-#praise the lord
+                #praise the lord
