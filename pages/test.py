@@ -1,7 +1,6 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
 import io
-import base64
 
 st.title("Download Medication Intake Tracker Form")
 
@@ -40,12 +39,22 @@ try:
     # Get the content of the selected file
     file_content = get_file_content(selected_file)
 
-    # Convert the BytesIO object to base64 encoded string
-    b64 = base64.b64encode(file_content.getvalue()).decode()
-
     # Display the selected file content
     st.text("Displaying the selected file:")
-    st.markdown(f'<embed src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf">', unsafe_allow_html=True)
+    st.download_button(
+        label="Download PDF",
+        data=file_content,
+        file_name=selected_file,
+        mime="application/pdf"
+    )
+
+    # Display the PDF using Streamlit's built-in function
+    st.download_button(
+        label="Download PDF",
+        data=file_content,
+        file_name=selected_file,
+        mime="application/pdf"
+    )
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
