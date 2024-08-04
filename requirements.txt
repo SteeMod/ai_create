@@ -3,4 +3,6 @@ azure-storage-blob
 matplotlib 
 azure-ai-formrecognizer
 azure-core
+PyPDF2
+streamlit-pdf-viewer
 
