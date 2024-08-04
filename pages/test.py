@@ -24,7 +24,7 @@ def download_blob_data(blob):
     try:
         blob_client = blob_service_client.get_blob_client('data1', blob.name)
         stream = blob_client.download_blob().readall()
-        return pd.read_csv(io.StringIO(stream.decode('utf-8', errors='ignore')))
+        return pd.read_csv(io.StringIO(stream.decode('utf-8', errors='ignore')), error_bad_lines=False)
     except Exception as e:
         st.write(f"Error occurred: {e}")
         return None
@@ -61,7 +61,8 @@ with st.form("Review"):
             Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
             Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
 
-            if st.form_submit_button('Submit'):
+            submit_button = st.form_submit_button('Submit')
+            if submit_button:
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
                     'LastName': [LastName],
