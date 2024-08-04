@@ -396,10 +396,11 @@ with st.form("Review"):
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
-            if st.form_submit_button('Submit'):
+           
 
             # When the 'Submit' button is pressed, the form will be submitted
-                if st.form_submit_button('Submit'):
+            if submitted:
+            if st.form_submit_button('Submit'):
                     form_data = pd.DataFrame({
             
                     'FirstName': [FirstName],
