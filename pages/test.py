@@ -395,12 +395,8 @@ with st.form("Review"):
             PharmacyName, PharmacyPhone = st.columns(2)
             PharmacyName=PharmacyName.text_input("PharmacyName", value=str(row_data.get('PharmacyName', '')))
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
-
-           
-
-            # When the 'Submit' button is pressed, the form will be submitted
-            if submitted:
             if st.form_submit_button('Submit'):
+                    
                     form_data = pd.DataFrame({
             
                     'FirstName': [FirstName],
@@ -693,9 +689,9 @@ with st.form("Review"):
             		'Day31Route': [Day31Route],
 
                 })
-                timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                blob_name = f"ReviewedFiles/review_{timestamp}.csv"
-                upload_blob_data('data1', blob_name, form_data)
+            timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            blob_name = f"ReviewedFiles/review_{timestamp}.csv"
+            upload_blob_data('data1', blob_name, form_data)
 
 
 #praise the lord
