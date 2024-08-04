@@ -48,13 +48,7 @@ try:
         mime="application/pdf"
     )
 
-    # Display the PDF using Streamlit's built-in function
-    st.download_button(
-        label="Download PDF",
-        data=file_content,
-        file_name=selected_file,
-        mime="application/pdf"
-    )
+    
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
