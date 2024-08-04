@@ -50,10 +50,7 @@ with st.form("Review"):
     latest_blob = get_latest_blob('data1')
     if latest_blob is not None:
         data = download_blob_data(latest_blob)
-        st.write(data)
-    submitted = st.form_submit_button("Submit")
-    if submitted:
-        st.write("Form submitted successfully!")
+        
 
 
         if data is not None:
@@ -409,7 +406,11 @@ with st.form("Review"):
             PharmacyPhone=PharmacyPhone.text_input("PharmacyPhone", value=str(row_data.get('PharmacyPhone', '')))
 
             # When the 'Submit' button is pressed, the form will be submitted
-            if st.form_submit_button('Submit'):
+            st.write(data)
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        st.write("Form submitted successfully!")
+        if st.form_submit_button('Submit'):
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
                     'LastName': [LastName],
