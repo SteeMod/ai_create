@@ -407,9 +407,9 @@ with st.form("Review"):
 
             # When the 'Submit' button is pressed, the form will be submitted
             st.write(data)
-    submitted = st.form_submit_button("Submit")
-    if submitted:
-        st.write("Form submitted successfully!")
+            submitted = st.form_submit_button("Submit")
+            if submitted:
+                st.write("Form submitted successfully!")
         if st.form_submit_button('Submit'):
                 form_data = pd.DataFrame({
                     'FirstName': [FirstName],
