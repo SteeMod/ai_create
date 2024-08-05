@@ -1,6 +1,7 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
 import io
+import tempfile
 from streamlit_pdf_viewer import pdf_viewer
 
 st.title("Download Medication Intake Tracker Form")
@@ -40,7 +41,14 @@ try:
     # Function to display PDF
     def display_pdf(pdf_data):
         st.text("Displaying the selected file:")
-        pdf_viewer(pdf_data)
+
+        # Save the PDF to a temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+            tmp_file.write(pdf_data.getbuffer())
+            tmp_file_path = tmp_file.name
+
+        # Use the temporary file path with pdf_viewer
+        pdf_viewer(tmp_file_path)
 
         st.download_button(
             label="Download PDF",
