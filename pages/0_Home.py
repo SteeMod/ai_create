@@ -9,7 +9,7 @@ st.write("First go to the download page and either download or print the form yo
 st.subheader("Step 2.")
 st.write("After filling the form, Go to the upload page and select your filled form and click submit. If all goes well it should say File uploaded successfully!, you may now move on to the review page")
 st.subheader("Step 3.")
-st.write("Check accuracy and edit the form accordingly *Note that innacuracies may be caused by illegible handwriting* If you don't take medication everyday replace :unselected: fileds with nan to ensure accuracy.")
+st.write("Check accuracy and edit the form accordingly *Note that innacuracies may be caused by illegible handwriting* .")
 st.subheader("Step 4")
 st.write("Go to your Dashboard to view your results.")
 st.header("Final Step")
