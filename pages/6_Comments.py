@@ -8,7 +8,7 @@ container_name = "data1/Misc"
 blob_name = "comments.txt"
 
 # Create a form with a text area in Streamlit
-st.subheader("Instructions")
+
 
 with st.form(key='Comment'):
     text_input = st.text_area(label='Enter your comment', value='', placeholder='Include who the message is from and give detailed comments.', max_chars=500)
