@@ -1,0 +1,35 @@
+ParticipantID,FirstName,LastName,Address,City,State,ZipCode,Phone,Allergy1,OTPName,OTPAddress,OTPphone,OTPClinician,PharmacyName,PharmacyPhone,Med1Check,Med1Dosage,Med1Freq,Med1Form,Med1Route,Med1Instruction,Med2Check,Med3Check,Med4Check,MedIntakeName,MedIntakeMonth,MedIntakeYear,Day1,Day1yes,Day1No,Day1Dosage,Day1Freq,Day1Form,Day1Route,Day2,Day2yes,Day2No,Day2Dosage,Day2Freq,Day2Form,Day2Route,Day3,Day3yes,Day3No,Day3Dosage,Day3Freq,Day3Form,Day3Route,Day4,Day4yes,Day4No,Day4Dosage,Day4Freq,Day4Form,Day4Route,Day5,Day5Yes,Day5No,Day5Freq,Day6,Day6Yes,Day6No,Day6Dosage,Day6Freq,Day6Form,Day6Route,Day7,Day7Yes,Day7No,Day7Dosage,Day7Freq,Day7Form,Day7Route,Day8,Day8Yes,Day8No,Day8Dosage,Day8Freq,Day8Form,Day8Route,Day9,Day9yes,Day9No,Day9Dosage,Day9Freq,Day9Form,Day10,Day10yes,Day10No,Day11,Day11Yes,Day11No,Day11Dosage,Day11Freq,Day11Form,Day11Route,Day12,Day12Yes,Day12No,Day12Dosage,Day12Freq,Day12Form,Day12Route,Day13,Day13Yes,Day13No,Day13Dosage,Day13Freq,Day13Form,Day13Route,Day14,Day14Yes,Day14No,Day14Dosage,Day14Freq,Day14Form,Day14Route,Day15,Day15Yes,Day15No,Day16,Day17Yes,Day17No,Day17Dosage,Day17Freq,Day17Form,Day17Route,Day18,Day18Yes,Day18No,Day18Dosage,Day18Freq,Day18Form,Day18Route,Day19,Day19Yes,Day19No,Day19Dosage,Day19Freq,Day19Form,Day19Route,Day20,Day20Yes,Day20No,Day20Dosage,Day20Freq,Day20Form,Day20Route,Day21,Day21Yes,Day21No,Day21Freq,Day22,Day22Yes,Day22No,Day22Dosage,Day22Freq,Day22Form,Day23,Day23Dosage,Day23Freq,Day23Form,Day23Route,Day24Yes,Day24Dosage,Day24Freq,Day24Form,Day24Route,Day25,Day25No,Day25Dosage,Day25Freq,Day25Form,Day26,Day26Form,Day26Route,Day28Freq,Day28Form,Day28Route,Day29,Day29Yes,Day29No,Day29Dosage,Day29Freq,Day29Form,Day29Route,Day30,Day30Yes,Day30No,Day30Dosage,Day30Freq,Day30Form,Day30Route,Day31,Day31Yes,Day31No,Day31Dosage,Day31Freq,Day31Form,Day31Route,Day24,Day22Route,Day16No,Med3Instructions,Day27Yes,Day16Yes,Day26No,Day9Route,Day15Dosage,Day5Route,Day10Freq,Day27No,Day10Dosage,Day28Dosage,Day16Dosage,Med2Frequency,Day15Freq,Day15Route,Day24No,Day16Route,Day21Route,Day27Route,Med4Dosage,Day28Yes,Day5Dosage,Day21Dosage,Day17,Day5Form,Day25Route,Med2Name,Med2Form,Day27Form,Day23No,Day26Frequency,Med4Name,Med4Frequency,Med3Route,Day10Form,Day26Dosage,Day23Yes,Day25Yes,Med2Instructions,Med4Form,Day27,Med4Route,Med2Dosage,Med1Name,Day21Form,Day10Route,Day27Dosage,Day16Freq,Allergy2,Med2Route,Day28,Med3Form,Med4Instructions,Day15Form,Day28No,Day26Yes,Med3Dosage,Day27Freq,Med3Name,Med3Frequency,Day16Form
+12345,Jay,Bliss,1 Luv Blvd,Lilyvillie,Washington,98123,123-456-7899,Aspirin,HORIZON,4 AVEW HEART,987-654-3211,DR. SO GOOD,4 HEALING,293 847 5621,:selected:,25 mg,"2
+time(s)
+Daily",Tablet,Oral,Take 2 tablets daily,:unselected:,:unselected:,:unselected:,Bunophine,JULY,2024,1,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,oral,2,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,0192,3,:selected:,:unselected:,25 mg,"2
+time(s) Dar zy",Tablet,Ora7,4,:selected:,:unselected:,25 mg,2,Tablet,oral,5,:unselected:,:selected:,time(s),6,:selected:,:unselected:,25 mg,"2
+time(s)
+Daily",Tablet,ora7,7,:selected:,:unselected:,25 mg,"2
+time(s)
+Daily",Tablet,oral,8,:selected:,:unselected:,25 mg,"2
+time(s)
+Dany",Tablet,oral,9,:selected:,:unselected:,25 mg,"2
+time(s) Dans",Tablet,10,:unselected:,:selected:,11,:selected:,:unselected:,25 mg,"2
+time(s)
+Daily",Tablet,Ora7,12,:selected:,:unselected:,25 mg,"2
+time(s) Dans",Tablet,Org7,13,:selected:,:unselected:,25 mg,"2
+time(s)
+Daily",Tablet,Oral,14,:selected:,:unselected:,25 mg,"2
+time(s)
+Dany",Tablet,Oral,15,:unselected:,:selected:,16,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,Oral,18,:unselected:,:selected:,25 mg,"2
+time(s)
+Daily",Tablet,Oraz,19,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,Org7,20,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,Oral,21,:unselected:,:selected:,time(s),17,:selected:,:unselected:,25 mg,"2
+time(s)
+Daily",Tablet,23,25 mg,"2
+time(s) Daily",Tablet,Orar,:selected:,mg,"2
+time(s) Dany",Tablet,Oral,25,:unselected:,25 mg,Daily,Tablet,26,Tablet,Oral,2,Tablet,Oral,"28
+29",:unselected:,:unselected:,25 mg,"Daily
+2
+time(s)",Tablet,Oral,30,:selected:,:unselected:,25 mg,"2
+time(s) Daily",Tablet,Oral,31,:selected:,:unselected:,25 mg,"2
+Daily",Tablet,Oral,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
