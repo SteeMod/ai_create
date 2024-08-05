@@ -1,6 +1,7 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
 import io
+from streamlit_pdf_viewer import pdf_viewer
 
 st.title("Download Medication Intake Tracker Form")
 
@@ -39,8 +40,8 @@ try:
     # Function to display PDF
     def display_pdf(pdf_data):
         st.text("Displaying the selected file:")
-        
-        
+        pdf_viewer(pdf_data)
+
         st.download_button(
             label="Download PDF",
             data=pdf_data,
