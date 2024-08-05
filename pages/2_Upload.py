@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
@@ -78,6 +76,10 @@ def main(uploaded_file):
         with open(csv_filename, 'rb') as data:
             csv_blob_client.upload_blob(data, overwrite=True)
         logging.info(f"CSV file '{csv_blob_name}' uploaded successfully.")
+        
+        # Display success message
+        st.success("File uploaded successfully!")
+
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         st.error(f"An error occurred: {e}")
