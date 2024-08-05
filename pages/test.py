@@ -36,22 +36,27 @@ try:
 
         return pdf_data
 
+    # Function to display PDF
+    def display_pdf(pdf_data):
+        st.text("Displaying the selected file:")
+        st.download_button(
+            label="Download PDF",
+            data=pdf_data,
+            file_name=selected_file,
+            mime="application/pdf"
+        )
+        st.download_button(
+            label="Download PDF",
+            data=pdf_data,
+            file_name=selected_file,
+            mime="application/pdf"
+        )
+
     # Get the content of the selected file
     file_content = get_file_content(selected_file)
 
-    # Display the selected file content
-    st.text("Displaying the selected file:")
-    st.download_button(
-        label="Download PDF",
-        data=file_content,
-        file_name=selected_file,
-        mime="application/pdf"
-    )
-
-    
-    
-
-
+    # Display the PDF
+    display_pdf(file_content)
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
