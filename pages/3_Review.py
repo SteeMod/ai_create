@@ -1,3 +1,4 @@
+
 import streamlit as st
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 import pandas as pd
@@ -10,10 +11,10 @@ st.title("Review Form For Accuracy")
 connection_string = 'DefaultEndpointsProtocol=https;AccountName=devcareall;AccountKey=GEW0V0frElMx6YmZyObMDqJWDj3pG0FzJCTkCaknW/JMH9UqHqNzeFhF/WWCUKeIj3LNN5pb/hl9+AStHMGKFA==;EndpointSuffix=core.windows.net'
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
 
-def get_latest_blob(container_name):
+def get_latest_blob(container_name, folder_name):
     try:
         container_client = blob_service_client.get_container_client(container_name)
-        blob_list = container_client.list_blobs()
+        blob_list = container_client.list_blobs(name_starts_with=folder_name)
         latest_blob = max(blob_list, key=lambda blob: blob.last_modified)
         return latest_blob
     except Exception as e:
@@ -41,10 +42,10 @@ def upload_blob_data(container_name, blob_name, data):
 
 # Review button
 with st.form("Review"):
-    latest_blob = get_latest_blob('data1')
-    if (latest_blob is not None):
+    latest_blob = get_latest_blob('data1', 'CookedFiles/')
+    if latest_blob is not None:
         data = download_blob_data(latest_blob)
-        if (data is not None):
+        if data is not None:
             row_data = data.iloc[0]  # assuming you want to display the first row
 
             col1, col2 = st.columns(2)
@@ -60,7 +61,7 @@ with st.form("Review"):
             Allergy1, Allergy2 = st.columns(2)
             Allergy1 = Allergy1.text_input("Allergy1", value=str(row_data.get('Allergy1', '')))
             Allergy2 = Allergy2.text_input("Allergy2", value=str(row_data.get('Allergy2', '')))
-
+            
             # Medication details section
             MedIntakeName, MedIntakeMonth, MedIntakeYear = st.columns(3)
             MedIntakeName = MedIntakeName.text_input("MEDICATION NAME", value=str(row_data.get('MedIntakeName', '')))
@@ -691,5 +692,4 @@ with st.form("Review"):
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                 blob_name = f"ReviewedFiles/review_{timestamp}.csv"
                 upload_blob_data('data1', blob_name, form_data)
-
-                #praise the lord
+                st.write("Form data uploaded successfully.")

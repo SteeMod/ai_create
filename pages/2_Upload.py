@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
@@ -28,7 +30,7 @@ def main(uploaded_file):
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         original_blob_name = uploaded_file.name
         file_extension = os.path.splitext(original_blob_name)[1]
-        timestamped_blob_name = f"{timestamp}{file_extension}"
+        timestamped_blob_name = f"RawFiles/{timestamp}{file_extension}"
 
         # Create a new blob client for the PDF file
         pdf_blob_client = container_client.get_blob_client(timestamped_blob_name)
@@ -70,11 +72,12 @@ def main(uploaded_file):
             writer.writerow(record)
 
         # Create a new blob client for the CSV file
-        csv_blob_client = container_client.get_blob_client(csv_filename)
+        csv_blob_name = f"CookedFiles/{csv_filename}"
+        csv_blob_client = container_client.get_blob_client(csv_blob_name)
         # Upload the CSV file to Azure Blob Storage
         with open(csv_filename, 'rb') as data:
             csv_blob_client.upload_blob(data, overwrite=True)
-        logging.info(f"CSV file '{csv_filename}' uploaded successfully.")
+        logging.info(f"CSV file '{csv_blob_name}' uploaded successfully.")
     except Exception as e:
         logging.error(f"An error occurred: {e}")
         st.error(f"An error occurred: {e}")
