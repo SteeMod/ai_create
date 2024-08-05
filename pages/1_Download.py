@@ -1,7 +1,8 @@
 import streamlit as st
 from azure.storage.blob import BlobServiceClient
 import io
-import base64
+import tempfile
+from streamlit_pdf_viewer import pdf_viewer
 
 st.title("Download Medication Intake Tracker Form")
 
@@ -37,15 +38,33 @@ try:
 
         return pdf_data
 
+    # Function to display PDF
+    def display_pdf(pdf_data):
+        st.text("Displaying the selected file:")
+
+        # Save the PDF to a temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+            tmp_file.write(pdf_data.getbuffer())
+            tmp_file_path = tmp_file.name
+
+        # Use the temporary file path with pdf_viewer
+        pdf_viewer(tmp_file_path)
+
+        st.download_button(
+            label="Download PDF",
+            data=pdf_data,
+            file_name=selected_file,
+            mime="application/pdf"
+        )
+
     # Get the content of the selected file
     file_content = get_file_content(selected_file)
 
-    # Convert the BytesIO object to base64 encoded string
-    b64 = base64.b64encode(file_content.getvalue()).decode()
-
-    # Display the selected file content
-    st.text("Displaying the selected file:")
-    st.markdown(f'<embed src="data:application/pdf;base64,{b64}" width="700" height="800" type="application/pdf">', unsafe_allow_html=True)
+    # Display the PDF
+    display_pdf(file_content)
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
+
+
+    #praise the lord
