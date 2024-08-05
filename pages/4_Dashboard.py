@@ -23,8 +23,8 @@ try:
     blob_client = blob_service_client.get_blob_client('data1', latest_blob.name)
     df = pd.read_csv(BytesIO(blob_client.download_blob().readall()))
 
-    # Select only columns with names containing 'Day' and 'Yes' (case-insensitive)
-    df = df[[col for col in df.columns if 'Day' in col and 'Yes' in col]]
+    # Select only columns with names containing 'Day' and either 'Yes' or 'yes' (case-insensitive)
+    df = df[[col for col in df.columns if 'Day' in col and ('Yes' in col or 'yes' in col)]]
 
     # Transpose the DataFrame
     df = df.transpose()
