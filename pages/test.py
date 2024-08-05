@@ -39,12 +39,8 @@ try:
     # Function to display PDF
     def display_pdf(pdf_data):
         st.text("Displaying the selected file:")
-        st.download_button(
-            label="Download PDF",
-            data=pdf_data,
-            file_name=selected_file,
-            mime="application/pdf"
-        )
+        
+        
         st.download_button(
             label="Download PDF",
             data=pdf_data,
