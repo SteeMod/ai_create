@@ -35,15 +35,15 @@ try:
     # Rename the first column to 'Yes'
     df.rename(columns={df.columns[0]: 'Yes'}, inplace=True)
 
-    # Count the rows where 'Yes' is not NaN or None
-    numerator = df[df['Yes'].notna() & df['Yes'].notnull()].shape[0]
+    # Count the rows where 'Yes' is ':selected:'
+    numerator = df[df['Yes'] == ':selected:'].shape[0]
 
-    # Get the total row count
-    denominator = df.shape[0]
+    # Count the rows where 'Yes' is either ':selected:' or ':unselected:'
+    denominator = df[(df['Yes'] == ':selected:') | (df['Yes'] == ':unselected:')].shape[0]
 
     # Create a pie chart
     fig, ax = plt.subplots(figsize=(6, 6))
-    ax.pie([numerator, denominator - numerator], labels=['Not NaN/None', 'NaN/None'], autopct='%1.1f%%')
+    ax.pie([numerator, denominator - numerator], labels=['Selected', 'Unselected'], autopct='%1.1f%%')
     ax.set_title('Your Statistics')
 
     # Create two columns
