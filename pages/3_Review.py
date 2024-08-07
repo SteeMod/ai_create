@@ -24,7 +24,7 @@ blob_client = container_client.get_blob_client(latest_blob.name)
 downloaded_blob = blob_client.download_blob().readall()
 
 # Display the file content on Streamlit
-st.title("Latest Reviewed File")
+st.title("Original Form")
 
 # Check if the file is a PDF
 if latest_blob.name.endswith('.pdf'):
@@ -39,7 +39,7 @@ if latest_blob.name.endswith('.pdf'):
 else:
     st.text("The latest file is not a PDF.")
 
-st.title("Review Form For Accuracy")
+st.title("Digital Form [Extracted data]")
 
 def get_latest_blob(container_name, folder_name):
     try:
