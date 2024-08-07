@@ -26,7 +26,7 @@ col1, col2 = st.columns(2)
 # Use the first column for text
 col1.title("About[Me]")
 col1.write(
-    "Stephen Modimakwane is a  Management Information Systems Specialist with over 18 years of experience in the field. I focus on Data Analytics, Data Visualization, and AI Infusion. I have a passion for creating data-driven solutions that help organizations."
+    "Stephen Modimakwane is a  Management Information Systems Specialist with over 18 years of experience in the field. His expertise include Data Analytics, Data Visualization, AI Infusion and Strategy Execution. He has a passion for creating technology solutions that help organizations and communities."
 )
 
 # Use the second column for the image
